@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#2E2118">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>HMS Buying Tool</title>
+<title>HMS Fair-Payment Purchasing Assessment</title>
 <style>
   :root{
     --cream:#FAF5EF; --ink:#2E2118; --terracotta:#8C5C3C;
@@ -21,19 +21,25 @@
   .wrap{max-width:520px;margin:0 auto;padding:0 16px 120px}
 
   header{padding:18px 0 14px;display:flex;align-items:baseline;justify-content:space-between;
-    border-bottom:1px solid var(--rule);margin-bottom:18px}
-  header h1{font-size:15px;font-weight:600;letter-spacing:.02em;margin:0}
-  header .rate{font-size:13px;color:var(--dim)}
+    border-bottom:1px solid var(--rule);margin-bottom:18px;gap:10px}
+  header h1{font-size:14px;font-weight:600;letter-spacing:.02em;margin:0}
+  header .rate{font-size:12.5px;color:var(--dim);white-space:nowrap}
 
-  nav{display:flex;margin:0 0 20px;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  nav{display:flex;margin:0 0 24px;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
   nav button{flex:1;padding:12px 6px;border:0;background:transparent;font:inherit;font-size:15px;
     font-weight:500;color:var(--dim);cursor:pointer}
   nav button.on{background:var(--ink);color:var(--cream)}
 
-  .editing{background:#F7E8D9;border:1px solid var(--warn);color:#7A5310;
-    padding:10px 13px;border-radius:2px;font-size:14px;margin-bottom:16px}
+  .sec{margin:0 0 18px;padding:0 0 20px;border-bottom:1px solid var(--rule)}
+  .sec > h2{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--terracotta);margin:0 0 4px}
+  .sec > .lede{font-size:13.5px;color:var(--dim);margin:0 0 16px;line-height:1.45}
+  .secnum{display:inline-block;min-width:20px}
 
-  .field{margin-bottom:16px}
+  .editing{background:#F7E8D9;border:1px solid var(--warn);color:#7A5310;
+    padding:10px 13px;border-radius:2px;font-size:14px;margin-bottom:18px}
+
+  .field{margin-bottom:15px}
   .field label{display:block;font-size:14px;color:var(--dim);margin-bottom:5px}
   .field .hint{font-size:12.5px;color:var(--dim);margin-top:4px}
   input,select{width:100%;padding:13px 12px;font:inherit;font-size:18px;background:var(--paper);
@@ -44,73 +50,101 @@
   .row .field{flex:1}
 
   .check{display:flex;gap:11px;align-items:flex-start;background:var(--paper);border:1px solid var(--rule);
-    border-radius:2px;padding:13px 14px;margin-bottom:16px;cursor:pointer}
+    border-radius:2px;padding:13px 14px;margin-bottom:15px;cursor:pointer}
   .check input{width:22px;height:22px;flex:0 0 22px;margin:1px 0 0;accent-color:var(--terracotta)}
-  .check span{font-size:14.5px;line-height:1.4;color:var(--ink)}
+  .check span{font-size:14px;line-height:1.42;color:var(--ink)}
 
-  .verdict{margin:22px 0 6px;padding:22px 18px;border-radius:3px;background:var(--paper);
-    border:1px solid var(--rule);text-align:center}
-  .verdict.pass{background:var(--pass);border-color:var(--pass)}
-  .verdict.border{background:var(--warn);border-color:var(--warn)}
-  .verdict.fail{background:var(--fail);border-color:var(--fail)}
-  .verdict.incomplete{background:var(--grey);border-color:var(--grey)}
-  .verdict .word{font-size:34px;line-height:1.08;font-weight:700;letter-spacing:-.02em;margin:0;color:var(--dim)}
-  .verdict.pass .word,.verdict.fail .word,.verdict.border .word,.verdict.incomplete .word{color:#fff}
-  .verdict .margin{font-size:19px;margin-top:8px;color:var(--dim)}
-  .verdict.pass .margin,.verdict.fail .margin,.verdict.border .margin,.verdict.incomplete .margin{color:rgba(255,255,255,.92)}
-  .verdict .why{font-size:14.5px;margin-top:8px;color:var(--dim);line-height:1.45}
-  .verdict.pass .why,.verdict.fail .why,.verdict.border .why,.verdict.incomplete .why{color:rgba(255,255,255,.9)}
+  .fairbox{background:var(--ink);color:var(--cream);border-radius:3px;padding:16px 18px;margin-bottom:15px}
+  .fairbox .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(250,245,239,.6)}
+  .fairbox .big{font-size:32px;font-weight:600;letter-spacing:-.01em;line-height:1.1;margin-top:3px}
+  .fairbox .sub{font-size:15px;color:rgba(250,245,239,.75);margin-top:3px}
+  .fairbox table{width:100%;border-collapse:collapse;margin-top:12px;padding-top:10px;
+    border-top:1px solid rgba(250,245,239,.18);font-size:13.5px;color:rgba(250,245,239,.78)}
+  .fairbox table td{padding:3px 0}
+  .fairbox table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .fairbox table tr.hl td{color:#fff;font-weight:600;padding-top:7px}
+  .fairbox .flagline{font-size:13.5px;margin-top:10px;padding-top:9px;
+    border-top:1px solid rgba(250,245,239,.18);color:#F0B8A8;line-height:1.42}
+  .fairbox .flagline.good{color:#B8DCC6}
 
-  .payline{background:var(--ink);color:var(--cream);padding:16px 18px;border-radius:3px;margin:10px 0 4px}
-  .payline .k{font-size:13px;color:rgba(250,245,239,.65)}
-  .payline .big{font-size:32px;font-weight:600;letter-spacing:-.01em;line-height:1.1;margin-top:2px}
-  .payline .sub{font-size:15px;color:rgba(250,245,239,.75);margin-top:3px}
-  .payline .hr{font-size:14px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(250,245,239,.2);
-    color:rgba(250,245,239,.8);line-height:1.4}
-  .payline .hr.low{color:#F0B8A8}
+  .vpair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .vcard{border-radius:3px;padding:15px 13px;text-align:center;background:var(--paper);border:1px solid var(--rule)}
+  .vcard .lbl{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+  .vcard .st{font-size:19px;font-weight:700;line-height:1.15;margin-top:6px;color:var(--dim)}
+  .vcard .dt{font-size:12.5px;margin-top:5px;color:var(--dim);line-height:1.35}
+  .vcard.pass{background:var(--pass);border-color:var(--pass)}
+  .vcard.border{background:var(--warn);border-color:var(--warn)}
+  .vcard.fail{background:var(--fail);border-color:var(--fail)}
+  .vcard.wait{background:var(--grey);border-color:var(--grey)}
+  .vcard.pass .lbl,.vcard.border .lbl,.vcard.fail .lbl,.vcard.wait .lbl{color:rgba(255,255,255,.7)}
+  .vcard.pass .st,.vcard.border .st,.vcard.fail .st,.vcard.wait .st,
+  .vcard.pass .dt,.vcard.border .dt,.vcard.fail .dt,.vcard.wait .dt{color:#fff}
+
+  .final{border-radius:3px;padding:20px 18px;text-align:center;background:var(--paper);
+    border:1px solid var(--rule);margin-bottom:15px}
+  .final .word{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0;color:var(--dim);line-height:1.1}
+  .final .why{font-size:14px;margin-top:8px;color:var(--dim);line-height:1.45}
+  .final.pass{background:var(--pass);border-color:var(--pass)}
+  .final.border{background:var(--warn);border-color:var(--warn)}
+  .final.fail{background:var(--fail);border-color:var(--fail)}
+  .final.wait{background:var(--grey);border-color:var(--grey)}
+  .final.pass .word,.final.border .word,.final.fail .word,.final.wait .word,
+  .final.pass .why,.final.border .why,.final.fail .why,.final.wait .why{color:#fff}
 
   .listline{background:var(--paper);border:1px solid var(--rule);padding:14px 18px;border-radius:3px;
-    margin:10px 0 0;display:flex;justify-content:space-between;align-items:baseline}
+    margin-bottom:15px;display:flex;justify-content:space-between;align-items:baseline}
   .listline .k{font-size:14px;color:var(--dim)}
   .listline .v{font-size:26px;font-weight:600}
 
-  table.breakdown{width:100%;border-collapse:collapse;margin:18px 0 6px;font-size:15px}
+  table.breakdown{width:100%;border-collapse:collapse;font-size:15px}
   table.breakdown td{padding:7px 0;border-bottom:1px solid var(--rule)}
   table.breakdown td:last-child{text-align:right;font-variant-numeric:tabular-nums}
   table.breakdown tr.total td{font-weight:600;border-bottom:0;padding-top:11px}
   table.breakdown tr.sub td{color:var(--dim)}
   table.breakdown td.est{color:var(--warn)}
 
-  .actions{display:flex;gap:10px;margin-top:20px}
+  .actions{display:flex;gap:10px}
   button.act{flex:1;padding:15px 10px;font:inherit;font-size:16px;font-weight:600;
     border:1px solid var(--ink);background:var(--ink);color:var(--cream);border-radius:2px;cursor:pointer}
   button.act.ghost{background:transparent;color:var(--ink)}
   button.act:disabled{opacity:.35}
-  .valid{font-size:13.5px;color:var(--fail);margin-top:10px;text-align:center}
+  .valid{font-size:13.5px;color:var(--fail);margin-top:10px;text-align:center;line-height:1.4}
 
-  .capblock{border:1px solid var(--rule);border-radius:3px;margin-bottom:14px;overflow:hidden}
+  .capblock{border:1px solid var(--rule);border-radius:3px;margin-bottom:12px;overflow:hidden}
   .capblock .head{display:flex;justify-content:space-between;align-items:baseline;padding:12px 14px 10px;background:var(--paper)}
   .capblock .nm{font-size:14px;color:var(--dim)}
-  .capblock .amt{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums}
+  .capblock .amt{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
   .capblock .amt.over{color:var(--fail)}
   .capblock .bar{height:5px;background:var(--rule)}
   .capblock .bar i{display:block;height:100%;background:var(--terracotta)}
   .capblock .bar i.over{background:var(--fail)}
 
+  .capital{border:1px solid var(--rule);border-radius:3px;background:var(--paper);
+    padding:14px 16px;margin-bottom:16px}
+  .capital h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--terracotta);
+    margin:0 0 10px;font-weight:700}
+  .capital table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .capital td{padding:5px 0}
+  .capital td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .capital tr.tot td{font-weight:600;border-top:1px solid var(--rule);padding-top:9px}
+  .capital tr.left td{font-weight:600}
+  .capital tr.left td.neg{color:var(--fail)}
+  .capital .warn{font-size:13px;color:var(--fail);margin-top:10px;line-height:1.4}
+
   .totals{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
     border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-bottom:16px}
   .totals div{background:var(--cream);padding:13px 14px}
   .totals .k{font-size:13px;color:var(--dim)}
-  .totals .v{font-size:23px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .totals .v{font-size:22px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
   .totals .v.over{color:var(--fail)}
 
   .livenote{font-size:13px;color:var(--dim);margin:0 0 18px;line-height:1.5}
-  h3.sec{font-size:13px;font-weight:600;color:var(--dim);letter-spacing:.02em;
-    margin:24px 0 10px;padding-top:14px;border-top:1px solid var(--rule)}
+  h3.grp{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);
+    margin:26px 0 10px;padding-top:16px;border-top:1px solid var(--rule)}
 
   .entry{background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:13px 14px;margin-bottom:10px}
   .entry.flag{border-left:3px solid var(--fail)}
-  .entry.rej{opacity:.62;background:transparent}
+  .entry.rej{opacity:.6;background:transparent}
   .entry .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
   .entry .name{font-weight:600;font-size:16px}
   .entry .meta{font-size:13.5px;color:var(--dim);margin-top:3px}
@@ -129,11 +163,13 @@
 
   .empty{text-align:center;color:var(--dim);padding:44px 20px;font-size:15px}
 
-  details.settings{margin-top:26px;border-top:1px solid var(--rule);padding-top:16px}
+  details.settings{margin-top:8px;border-top:1px solid var(--rule);padding-top:16px}
   details.settings summary{font-size:14.5px;color:var(--dim);cursor:pointer;padding:4px 0}
   details.settings .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-  details.settings input{font-size:16px;padding:10px}
-  details.settings h4{font-size:13px;color:var(--dim);font-weight:600;margin:20px 0 0;grid-column:1/-1}
+  details.settings input,details.settings select{font-size:16px;padding:10px}
+  details.settings h4{font-size:12px;color:var(--terracotta);font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;margin:22px 0 0;grid-column:1/-1}
+  details.settings .wide{grid-column:1/-1}
 
   .note{font-size:13px;color:var(--dim);margin-top:14px;line-height:1.5}
   textarea{width:100%;min-height:200px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -145,7 +181,7 @@
 <div class="wrap">
 
   <header>
-    <h1>Handmade Stories — buying tool</h1>
+    <h1>HMS fair-payment purchasing assessment</h1>
     <span class="rate" id="hdrRate"></span>
   </header>
 
@@ -157,142 +193,327 @@
   <section id="paneNew">
     <div id="editBanner" class="editing hidden"></div>
 
-    <div class="row">
+    <!-- 1 -->
+    <div class="sec">
+      <h2><span class="secnum">1.</span> The piece</h2>
+      <p class="lede">Who made it and what it is.</p>
       <div class="field">
-        <label for="maker">Maker</label>
-        <input id="maker" type="text" autocomplete="off" placeholder="Name">
+        <label for="skuLink">SKU</label>
+        <select id="skuLink">
+          <option value="">New SKU</option>
+        </select>
+        <div class="hint" id="skuHint">A sample and its production batch share one SKU. Pick the existing SKU when you come back to order.</div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="maker">Maker</label>
+          <input id="maker" type="text" autocomplete="off" placeholder="Name">
+        </div>
+        <div class="field">
+          <label for="region">Region</label>
+          <select id="region">
+            <option value="bali">Bali</option>
+            <option value="java">Central Java</option>
+          </select>
+        </div>
       </div>
       <div class="field">
-        <label for="region">Region</label>
-        <select id="region">
-          <option value="bali">Bali</option>
-          <option value="java">Central Java</option>
+        <label for="piece">Piece</label>
+        <input id="piece" type="text" autocomplete="off" placeholder="Short name">
+      </div>
+      <div class="field">
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="">Choose a category</option>
+          <option value="tabletop">Tabletop and kitchen</option>
+          <option value="decor">Decorative objects</option>
+          <option value="textiles">Textiles and soft furnishings</option>
+          <option value="storage">Storage and organisation</option>
+          <option value="furniture">Furniture and larger pieces</option>
+        </select>
+        <div class="hint">One primary category per piece. Material is not a category.</div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="format">Selling format</label>
+          <select id="format">
+            <option value="single">Single item</option>
+            <option value="set">Set</option>
+            <option value="bundle">Bundle</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="components">Pieces per unit</label>
+          <input id="components" type="number" inputmode="numeric" value="1">
+        </div>
+      </div>
+      <div class="field hidden" id="contentsWrap">
+        <label for="setContents">What is in one unit</label>
+        <input id="setContents" type="text" autocomplete="off" placeholder="e.g. 6 placemats and 1 runner">
+      </div>
+      <div class="hint hidden" id="physNote"></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="sec">
+      <h2><span class="secnum">2.</span> What the maker asks</h2>
+      <p class="lede">Always ask this. It is the starting point, and you never pay less than it.</p>
+      <div class="field hidden" id="basisWrap">
+        <label for="priceBasis">Maker price basis</label>
+        <select id="priceBasis">
+          <option value="set">Per complete unit</option>
+          <option value="component">Per individual component</option>
+        </select>
+      </div>
+      <div class="hidden" id="compWrap">
+        <div class="row">
+          <div class="field"><label for="c1n">Component 1</label><input id="c1n" type="text" placeholder="Placemat"></div>
+          <div class="field"><label for="c1q">Qty</label><input id="c1q" type="number" inputmode="numeric"></div>
+          <div class="field"><label for="c1p">Rp each</label><input id="c1p" type="number" inputmode="numeric"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="c2n">Component 2</label><input id="c2n" type="text" placeholder="Runner"></div>
+          <div class="field"><label for="c2q">Qty</label><input id="c2q" type="number" inputmode="numeric"></div>
+          <div class="field"><label for="c2p">Rp each</label><input id="c2p" type="number" inputmode="numeric"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="c3n">Component 3</label><input id="c3n" type="text" placeholder="Optional"></div>
+          <div class="field"><label for="c3q">Qty</label><input id="c3q" type="number" inputmode="numeric"></div>
+          <div class="field"><label for="c3p">Rp each</label><input id="c3p" type="number" inputmode="numeric"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="negotiated" id="negLbl">Maker's negotiated price for HMS, Rp</label>
+        <input id="negotiated" type="number" inputmode="numeric" placeholder="e.g. 500000">
+        <div class="hint hidden" id="negNote"></div>
+      </div>
+      <div class="field">
+        <label for="local">Their local retail or wholesale price, Rp (optional context)</label>
+        <input id="local" type="number" inputmode="numeric" placeholder="Leave blank if unknown">
+        <div class="hint">Recorded for context only. Does not set the price and does not reject a piece.</div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="sec">
+      <h2><span class="secnum">3.</span> What the work costs them</h2>
+      <p class="lede">Ask while they are working, not while you are negotiating. Ranges are fine. This verifies the price, it does not replace it.</p>
+      <div class="hint hidden" id="setCostNote" style="margin:-8px 0 14px"></div>
+      <div class="row">
+        <div class="field">
+          <label for="hours">Hours to make</label>
+          <input id="hours" type="number" inputmode="decimal" placeholder="e.g. 6">
+        </div>
+        <div class="field">
+          <label for="materials">Materials Rp</label>
+          <input id="materials" type="number" inputmode="numeric" placeholder="e.g. 60000">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="ohUnit">Their overhead per piece, Rp</label>
+          <input id="ohUnit" type="number" inputmode="numeric" placeholder="Blank uses the default %">
+          <div class="hint">Fuel, tool wear, rent, wastage, help.</div>
+        </div>
+        <div class="field">
+          <label for="agreedRate">Their labour rate, Rp per hour</label>
+          <input id="agreedRate" type="number" inputmode="numeric" placeholder="Blank uses the floor">
+        </div>
+      </div>
+      <label class="check" for="attest">
+        <input id="attest" type="checkbox">
+        <span>The maker confirms this price was freely agreed and covers materials, labour at no less than the HMS wage floor, reasonable production overhead and their own profit.</span>
+      </label>
+      <div class="row">
+        <div class="field">
+          <label for="confBy">Confirmed with</label>
+          <input id="confBy" type="text" autocomplete="off" placeholder="Name of person">
+        </div>
+        <div class="field">
+          <label for="confHow">How</label>
+          <select id="confHow">
+            <option value="verbal">Verbal, through interpreter</option>
+            <option value="verbal_direct">Verbal, direct</option>
+            <option value="written">Written and signed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="sec">
+      <h2><span class="secnum">4.</span> The payment</h2>
+      <p class="lede">The higher of their price and the production floor. Paid in full on the day.</p>
+      <div class="fairbox">
+        <div class="k">Pay the maker, per piece</div>
+        <div class="big" id="payIdr">Rp 0</div>
+        <div class="sub" id="payAud">Enter their price in section 2</div>
+        <table id="fairTable" class="hidden">
+          <tr><td>Materials</td><td id="fMat">-</td></tr>
+          <tr><td id="fLabLbl">Labour</td><td id="fLab">-</td></tr>
+          <tr><td id="fOhLbl">Overhead</td><td id="fOh">-</td></tr>
+          <tr><td id="fPmLbl">Maker profit</td><td id="fPm">-</td></tr>
+          <tr class="hl"><td>Production floor</td><td id="fFloor">-</td></tr>
+          <tr><td>Their asking price</td><td id="fAsk">-</td></tr>
+        </table>
+        <div class="flagline hidden" id="fairFlag"></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="sec">
+      <h2><span class="secnum">5.</span> Size and quantity</h2>
+      <p class="lede">Measure the carton as it will ship, wrapping included. Not the bare object.</p>
+      <div class="hint hidden" id="dimNote" style="margin:-8px 0 14px"></div>
+      <div class="row">
+        <div class="field"><label for="dl">Packed L cm</label><input id="dl" type="number" inputmode="decimal"></div>
+        <div class="field"><label for="dw">Packed W cm</label><input id="dw" type="number" inputmode="decimal"></div>
+        <div class="field"><label for="dh">Packed H cm</label><input id="dh" type="number" inputmode="decimal"></div>
+      </div>
+      <div class="field">
+        <label for="stage">Purchasing stage</label>
+        <select id="stage">
+          <option value="sample">Sample, one piece to test</option>
+          <option value="initial" selected>Initial production</option>
+          <option value="reorder">Reorder</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="kg">Packed weight kg</label>
+          <input id="kg" type="number" inputmode="decimal" placeholder="0.0">
+        </div>
+        <div class="field">
+          <label for="units" id="unitsLbl">Units</label>
+          <input id="units" type="number" inputmode="numeric" value="4">
+        </div>
+      </div>
+      <div class="field hidden" id="justWrap">
+        <label for="justify">Why more than the ceiling?</label>
+        <select id="justify">
+          <option value="">Choose a reason</option>
+          <option value="range">Completes a coordinated range</option>
+          <option value="competitor">Strong comparable evidence in Australia</option>
+          <option value="audience">Existing audience interest in this piece</option>
+          <option value="preorder">Customer preorder or deposit</option>
+          <option value="other">Other, noted separately</option>
         </select>
       </div>
     </div>
 
-    <div class="field">
-      <label for="piece">Piece</label>
-      <input id="piece" type="text" autocomplete="off" placeholder="Short name">
-    </div>
-
-    <div class="field">
-      <label for="local">Local wholesale price (Rp)</label>
-      <input id="local" type="number" inputmode="numeric" placeholder="e.g. 218000">
-      <div class="hint">What they last sold one for. You pay double this.</div>
-    </div>
-
-    <div class="field">
-      <label for="target">Australian price (A$)</label>
-      <input id="target" type="number" inputmode="decimal" placeholder="e.g. 170">
-      <div class="hint">What a customer pays, not the list price. The tool grosses that up.</div>
-    </div>
-
-    <div class="row">
-      <div class="field"><label for="dl">Packed L cm</label><input id="dl" type="number" inputmode="decimal"></div>
-      <div class="field"><label for="dw">Packed W cm</label><input id="dw" type="number" inputmode="decimal"></div>
-      <div class="field"><label for="dh">Packed H cm</label><input id="dh" type="number" inputmode="decimal"></div>
-    </div>
-    <div class="hint" style="margin:-10px 0 16px">Carton as it will ship, wrapping included. Not the bare object.</div>
-
-    <div class="row">
+    <!-- 6 -->
+    <div class="sec">
+      <h2><span class="secnum">6.</span> Australian price</h2>
+      <p class="lede">What a customer pays. The tool grosses it up for the member discount.</p>
       <div class="field">
-        <label for="kg">Packed weight kg</label>
-        <input id="kg" type="number" inputmode="decimal" placeholder="0.0">
+        <label for="target">Australian price A$</label>
+        <input id="target" type="number" inputmode="decimal" placeholder="e.g. 280">
       </div>
-      <div class="field">
-        <label for="units">Units</label>
-        <input id="units" type="number" inputmode="numeric" value="6">
+      <div class="listline">
+        <span class="k">List price on the site</span>
+        <span class="v" id="listPrice">A$0</span>
       </div>
     </div>
 
-    <div class="row">
-      <div class="field">
-        <label for="hours">Hours to make</label>
-        <input id="hours" type="number" inputmode="decimal" placeholder="e.g. 6">
+    <!-- 7 -->
+    <div class="sec">
+      <h2><span class="secnum">7.</span> The two tests</h2>
+      <p class="lede">Both must pass. Good ethics with bad economics is still a bad purchase. Good economics with a underpaid maker is a rejection.</p>
+      <div class="vpair">
+        <div class="vcard" id="vEth">
+          <div class="lbl">Maker payment</div>
+          <div class="st">-</div>
+          <div class="dt"></div>
+        </div>
+        <div class="vcard" id="vCom">
+          <div class="lbl">HMS margin</div>
+          <div class="st">-</div>
+          <div class="dt"></div>
+        </div>
       </div>
-      <div class="field">
-        <label for="materials">Materials Rp</label>
-        <input id="materials" type="number" inputmode="numeric" placeholder="e.g. 60000">
+      <div class="final" id="final">
+        <p class="word">-</p>
+        <div class="why">Fill in sections 2 to 6</div>
       </div>
+      <table class="breakdown">
+        <tr class="sub"><td>Customer pays after member discount</td><td id="bdPaid">-</td></tr>
+        <tr class="sub"><td>Less GST</td><td id="bdGst">-</td></tr>
+        <tr><td>Net revenue</td><td id="bdNet">-</td></tr>
+        <tr class="sub"><td>Maker</td><td id="bdMaker">-</td></tr>
+        <tr class="sub"><td>Origin allowance (provisional)</td><td id="bdOrigin">-</td></tr>
+        <tr class="sub"><td id="bdFreightLbl">Inbound freight (provisional)</td><td id="bdFreight">-</td></tr>
+        <tr class="sub"><td id="bdPostLbl">Domestic post</td><td id="bdPost">-</td></tr>
+        <tr class="sub"><td>Fulfilment</td><td id="bdFul">-</td></tr>
+        <tr class="sub"><td>Packaging</td><td id="bdPack">-</td></tr>
+        <tr class="sub"><td>Processing and platform</td><td id="bdProc">-</td></tr>
+        <tr class="sub"><td>Returns provision</td><td id="bdProv">-</td></tr>
+        <tr class="sub"><td>Duty</td><td id="bdDuty">-</td></tr>
+        <tr class="total"><td>HMS keeps</td><td id="bdHms">-</td></tr>
+        <tr class="sub"><td>Volume per piece (packed)</td><td id="bdCbm">-</td></tr>
+        <tr class="sub"><td>Contribution per cbm</td><td id="bdPerCbm">-</td></tr>
+      </table>
     </div>
 
-    <label class="check" for="attest">
-      <input id="attest" type="checkbox">
-      <span>Maker confirms this payment covers materials plus at least Rp&nbsp;44,000 per hour of labour.</span>
-    </label>
-
-    <div class="field">
-      <label for="status">Status</label>
-      <select id="status">
-        <option value="purchased">Purchased, paid today</option>
-        <option value="planned">Planned, not yet paid</option>
-        <option value="rejected">Rejected, keeping the record</option>
-      </select>
+    <!-- 8 -->
+    <div class="sec">
+      <h2><span class="secnum">8.</span> Record it</h2>
+      <p class="lede">Purchased locks the payment and the exchange rate. A piece that fails either test can only be saved as review or rejected.</p>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status">
+          <option value="purchased">Purchased, paid today</option>
+          <option value="planned">Planned, not yet paid</option>
+          <option value="review">Review, come back to it</option>
+          <option value="rejected">Rejected, keeping the record</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button class="act" id="save" disabled>Add to ledger</button>
+        <button class="act ghost" id="clear">Clear</button>
+      </div>
+      <div class="valid hidden" id="validMsg"></div>
     </div>
-
-    <div id="verdict" class="verdict">
-      <p class="word">—</p>
-      <div class="margin">Enter a local price and a target price</div>
-      <div class="why"></div>
-    </div>
-
-    <div class="payline">
-      <div class="k">Pay the maker, per piece</div>
-      <div class="big" id="payIdr">Rp 0</div>
-      <div class="sub" id="payAud">A$0.00 &middot; 0 units = A$0.00</div>
-      <div class="hr hidden" id="payHr"></div>
-    </div>
-
-    <div class="listline">
-      <span class="k">List price on the site</span>
-      <span class="v" id="listPrice">A$0</span>
-    </div>
-
-    <table class="breakdown">
-      <tr class="sub"><td>Customer pays after member discount</td><td id="bdPaid">—</td></tr>
-      <tr class="sub"><td>Less GST</td><td id="bdGst">—</td></tr>
-      <tr><td>Net revenue</td><td id="bdNet">—</td></tr>
-      <tr class="sub"><td>Maker</td><td id="bdMaker">—</td></tr>
-      <tr class="sub"><td>Origin allowance (provisional)</td><td id="bdOrigin">—</td></tr>
-      <tr class="sub"><td id="bdFreightLbl">Inbound freight</td><td id="bdFreight">—</td></tr>
-      <tr class="sub"><td id="bdFixedLbl">Clearance and port, share</td><td id="bdFixed">—</td></tr>
-      <tr class="sub"><td id="bdPostLbl">Domestic post</td><td id="bdPost">—</td></tr>
-      <tr class="sub"><td>Fulfilment</td><td id="bdFul">—</td></tr>
-      <tr class="sub"><td>Packaging</td><td id="bdPack">—</td></tr>
-      <tr class="sub"><td>Processing and platform</td><td id="bdProc">—</td></tr>
-      <tr class="sub"><td>Returns provision</td><td id="bdProv">—</td></tr>
-      <tr class="sub"><td>Duty</td><td id="bdDuty">—</td></tr>
-      <tr class="total"><td>HMS keeps</td><td id="bdHms">—</td></tr>
-      <tr class="sub"><td>Volume per piece (packed)</td><td id="bdCbm">—</td></tr>
-    </table>
-
-    <div class="actions">
-      <button class="act" id="save" disabled>Add to ledger</button>
-      <button class="act ghost" id="clear">Clear</button>
-    </div>
-    <div class="valid hidden" id="validMsg"></div>
 
     <details class="settings">
       <summary>Settings and assumptions</summary>
       <div class="grid">
+        <h4>Labour rate</h4>
+        <div class="field"><label for="sFloorRate">HMS absolute floor Rp/hr</label><input id="sFloorRate" type="number" value="44000"></div>
+        <div class="field"><label for="sLiving">Living wage reference Rp/hr</label><input id="sLiving" type="number" value="26000"></div>
+        <div class="field wide"><label for="sLivingSrc">Reference source and review date</label><input id="sLivingSrc" type="text" value="Java living wage estimate, review Mar 2027"></div>
+
+        <h4>Production floor</h4>
+        <div class="field"><label for="sOh">Default overhead %</label><input id="sOh" type="number" step="1" value="15"></div>
+        <div class="field"><label for="sPm">Maker profit %</label><input id="sPm" type="number" step="1" value="20"></div>
+        <div class="field wide"><label for="sPmMethod">Profit method</label>
+          <select id="sPmMethod">
+            <option value="margin">Margin, cost divided by (1 minus %)</option>
+            <option value="markup">Markup, cost plus %</option>
+          </select>
+        </div>
         <div class="field"><label for="sRate">Rp per A$1</label><input id="sRate" type="number" value="10400"></div>
-        <div class="field"><label for="sMult">Maker multiple</label><input id="sMult" type="number" step="0.1" value="2"></div>
+
+        <h4>Margin gates</h4>
         <div class="field"><label for="sGate">Reject below %</label><input id="sGate" type="number" value="49"></div>
         <div class="field"><label for="sSafe">Comfortable above %</label><input id="sSafe" type="number" value="54"></div>
         <div class="field"><label for="sDisc">Member discount %</label><input id="sDisc" type="number" value="10"></div>
-        <div class="field"><label for="sFreight">Sea freight A$ per cbm</label><input id="sFreight" type="number" value="150"></div>
-        <div class="field"><label for="sFixed">Fixed freight charges A$</label><input id="sFixed" type="number" step="10" value="600"></div>
-        <div class="field"><label for="sPieces">Pieces in consignment</label><input id="sPieces" type="number" value="90"></div>
+
+        <h4>Provisional freight allowance</h4>
+        <div class="field"><label for="sFixed">First cbm, all in A$</label><input id="sFixed" type="number" step="10" value="2620"></div>
+        <div class="field"><label for="sMarginal">Each extra cbm A$</label><input id="sMarginal" type="number" step="10" value="600"></div>
+        <div class="field"><label for="sConsCbm">Consignment cbm</label><input id="sConsCbm" type="number" step="0.1" value="1"></div>
+        <div class="field"><label for="sPieces">Pieces in consignment</label><input id="sPieces" type="number" value="72"></div>
+        <div class="field"><label for="sAirPiece">Sample airfreight per sellable sample A$</label><input id="sAirPiece" type="number" step="1" value="40"></div>
         <div class="field"><label for="sOrigin">Origin allowance A$</label><input id="sOrigin" type="number" step="0.5" value="6"></div>
+        <div class="field"><label for="sDuty">Duty %</label><input id="sDuty" type="number" step="0.5" value="0"></div>
+
+        <h4>Order costs</h4>
         <div class="field"><label for="sFul">Fulfilment A$</label><input id="sFul" type="number" step="0.5" value="8"></div>
         <div class="field"><label for="sPack">Packaging A$</label><input id="sPack" type="number" step="0.1" value="2.20"></div>
         <div class="field"><label for="sProc">Processing %</label><input id="sProc" type="number" step="0.1" value="2.8"></div>
         <div class="field"><label for="sPlat">Platform A$</label><input id="sPlat" type="number" step="0.1" value="1"></div>
         <div class="field"><label for="sProv">Provision A$</label><input id="sProv" type="number" step="0.1" value="2.50"></div>
-        <div class="field"><label for="sDuty">Duty %</label><input id="sDuty" type="number" step="0.5" value="0"></div>
-        <div class="field"><label for="sFloor">Hourly floor Rp</label><input id="sFloor" type="number" value="44000"></div>
-        <div class="field"><label for="sCubic">Cubic weight kg per cbm</label><input id="sCubic" type="number" value="250"></div>
+        <div class="field"><label for="sCubic">Cubic weight kg/cbm</label><input id="sCubic" type="number" value="250"></div>
 
         <h4>Domestic post by chargeable weight</h4>
         <div class="field"><label for="sPost1">Under 1kg A$</label><input id="sPost1" type="number" step="0.5" value="11"></div>
@@ -300,44 +521,134 @@
         <div class="field"><label for="sPost5">3 to 5kg A$</label><input id="sPost5" type="number" step="0.5" value="20"></div>
         <div class="field"><label for="sPost9">Over 5kg A$</label><input id="sPost9" type="number" step="0.5" value="28"></div>
 
-        <h4>Spend caps</h4>
-        <div class="field"><label for="sCapBali">Bali A$</label><input id="sCapBali" type="number" value="1600"></div>
-        <div class="field"><label for="sCapJava">Central Java A$</label><input id="sCapJava" type="number" value="2400"></div>
+        <h4>Collection gates</h4>
+        <div class="field"><label for="sSkuTarget">SKU target</label><input id="sSkuTarget" type="number" value="14"></div>
+        <div class="field"><label for="sSkuMax">SKU hard maximum</label><input id="sSkuMax" type="number" value="18"></div>
+        <div class="field"><label for="sUnitTarget">Unit target</label><input id="sUnitTarget" type="number" value="65"></div>
+        <div class="field"><label for="sUnitMax">Unit hard maximum</label><input id="sUnitMax" type="number" value="80"></div>
+        <div class="field"><label for="sQtyMin">Minimum units per SKU</label><input id="sQtyMin" type="number" value="2"></div>
+        <div class="field"><label for="sQtyCeil">Units per SKU ceiling</label><input id="sQtyCeil" type="number" value="6"></div>
+        <div class="field"><label for="sSkuExp">Max spend per SKU A$</label><input id="sSkuExp" type="number" value="550"></div>
+        <div class="field"><label for="sMakerWarn">Maker warning %</label><input id="sMakerWarn" type="number" value="25"></div>
+        <div class="field"><label for="sMakerMax">Maker hard review %</label><input id="sMakerMax" type="number" value="35"></div>
+        <div class="field"><label for="sCatSku">Category SKU warning %</label><input id="sCatSku" type="number" value="40"></div>
+        <div class="field"><label for="sCatUnit">Category unit warning %</label><input id="sCatUnit" type="number" value="45"></div>
+        <div class="field"><label for="sCatBudget">Category budget warning %</label><input id="sCatBudget" type="number" value="35"></div>
+        <div class="field"><label for="sCatCbm">Category cbm warning %</label><input id="sCatCbm" type="number" value="35"></div>
+        <div class="field"><label for="sBulkyBudget">Bulky budget warning %</label><input id="sBulkyBudget" type="number" value="20"></div>
+        <div class="field"><label for="sBulkyCbm">Bulky cbm warning %</label><input id="sBulkyCbm" type="number" value="25"></div>
+        <div class="field"><label for="sMinBillable">Minimum billable cbm</label><input id="sMinBillable" type="number" step="0.1" value="1"></div>
+
+        <h4>Launch capital</h4>
+        <div class="field"><label for="sTotalCash">Total cash available A$</label><input id="sTotalCash" type="number" value="15000"></div>
+        <div class="field"><label for="sReserve">Protected reserve A$</label><input id="sReserve" type="number" value="4500"></div>
+        <div class="field"><label for="sCapital">Deployable, excluding reserve A$</label><input id="sCapital" type="number" value="10500"></div>
+        <div class="field"><label for="sStockWarn">Warn on stock above A$</label><input id="sStockWarn" type="number" value="5500"></div>
+        <div class="field"><label for="sPackBudget">Packaging budget A$</label><input id="sPackBudget" type="number" value="1800"></div>
+        <div class="field"><label for="sContingency">Contingency A$</label><input id="sContingency" type="number" value="1200"></div>
+        <div class="field"><label for="sCapBali">Bali stock cap A$</label><input id="sCapBali" type="number" value="1600"></div>
+        <div class="field"><label for="sCapJava">Central Java stock cap A$</label><input id="sCapJava" type="number" value="2400"></div>
       </div>
-      <p class="note">Logistics assumptions recalculate across the whole ledger. Purchased pieces keep the exchange rate and payment recorded on the day, because that money has already gone.</p>
+      <p class="note">Freight is a provisional allowance until quotes are confirmed. Get a per-line breakdown from the forwarder covering collection, export packing, documentation, fumigation, licences, ocean freight, Australian destination charges, brokerage, delivery and insurance.</p>
     </details>
   </section>
 
   <section id="paneLedger" class="hidden">
+    <div class="field" style="margin-bottom:14px">
+      <label for="phase">Phase</label>
+      <select id="phase">
+        <option value="sourcing">Sourcing in progress</option>
+        <option value="review">Final purchasing review</option>
+        <option value="booked">Shipment booked</option>
+        <option value="locked">Collection locked</option>
+      </select>
+    </div>
+
+    <div class="final" id="collVerdict" style="margin-bottom:14px">
+      <p class="word">-</p>
+      <div class="why"></div>
+    </div>
+
+    <div class="capital">
+      <h4>Collection tests</h4>
+      <table id="testTable"></table>
+    </div>
+
+    <div class="capital">
+      <h4>Collection</h4>
+      <table>
+        <tr><td>SKUs</td><td id="cSkus">0</td></tr>
+        <tr><td>Sellable units</td><td id="cUnits">0</td></tr>
+        <tr><td>Physical components</td><td id="cPhys">0</td></tr>
+        <tr><td>Formats</td><td id="cFormats">-</td></tr>
+        <tr><td>Units per SKU, average</td><td id="cAvg">0</td></tr>
+        <tr><td>Categories represented</td><td id="cCats">0</td></tr>
+        <tr><td>Sample shipment, air</td><td id="cSampleShip">-</td></tr>
+        <tr><td>Production shipment, sea</td><td id="cProdShip">-</td></tr>
+        <tr><td>Sea capacity</td><td id="cUtil">-</td></tr>
+        <tr><td>Largest SKU exposure</td><td id="cSkuMax">-</td></tr>
+        <tr><td>Largest maker share</td><td id="cMakerMax">-</td></tr>
+        <tr><td>Largest category, worst measure</td><td id="cCatMax">-</td></tr>
+        <tr><td>Bulky share of cbm</td><td id="cBulky">-</td></tr>
+        <tr class="tot"><td>Weighted margin</td><td id="cMargin">-</td></tr>
+      </table>
+      <div class="warn hidden" id="cWarn"></div>
+    </div>
+
+    <div class="capital">
+      <h4>Categories</h4>
+      <table id="catTable"></table>
+    </div>
+
+    <div class="capital">
+      <h4>Shipment space, worst first</h4>
+      <table id="cbmTable"></table>
+    </div>
+
+    <div class="capital">
+      <h4>Launch capital</h4>
+      <table>
+        <tr><td>Total cash</td><td id="kCash">A$0</td></tr>
+        <tr><td>Protected reserve</td><td id="kReserve">A$0</td></tr>
+        <tr><td>Deployable</td><td id="kDeploy">A$0</td></tr>
+        <tr><td>Maker commitments</td><td id="kMaker">A$0</td></tr>
+        <tr><td>Sample airfreight</td><td id="kAir">A$0</td></tr>
+        <tr><td>Production sea freight</td><td id="kFreight">A$0</td></tr>
+        <tr><td>Packaging</td><td id="kPack">A$0</td></tr>
+        <tr><td>Contingency</td><td id="kCont">A$0</td></tr>
+        <tr class="tot"><td>Committed</td><td id="kTotal">A$0</td></tr>
+        <tr class="left"><td>Unallocated</td><td id="kLeft">A$0</td></tr>
+      </table>
+      <div class="warn hidden" id="kWarn"></div>
+    </div>
+
     <div class="capblock">
-      <div class="head"><span class="nm">Bali</span><span class="amt" id="capBaliAmt">A$0</span></div>
+      <div class="head"><span class="nm">Bali stock</span><span class="amt" id="capBaliAmt">A$0</span></div>
       <div class="bar"><i id="capBaliBar" style="width:0%"></i></div>
     </div>
     <div class="capblock">
-      <div class="head"><span class="nm">Central Java</span><span class="amt" id="capJavaAmt">A$0</span></div>
+      <div class="head"><span class="nm">Central Java stock</span><span class="amt" id="capJavaAmt">A$0</span></div>
       <div class="bar"><i id="capJavaBar" style="width:0%"></i></div>
     </div>
 
     <div class="totals">
-      <div><div class="k">Committed</div><div class="v" id="tSpend">A$0</div></div>
-      <div><div class="k">Left to spend</div><div class="v" id="tLeft">A$0</div></div>
       <div><div class="k">SKUs</div><div class="v" id="tSkus">0</div></div>
       <div><div class="k">Units</div><div class="v" id="tUnits">0</div></div>
       <div><div class="k">Total volume</div><div class="v" id="tCbm">0.00</div></div>
-      <div><div class="k">Below the floor</div><div class="v" id="tBad">0</div></div>
+      <div><div class="k">Below a floor</div><div class="v" id="tBad">0</div></div>
     </div>
     <p class="livenote" id="liveNote"></p>
 
     <div id="list"></div>
     <div id="rejList"></div>
 
-    <div class="actions">
+    <div class="actions" style="margin-top:20px">
       <button class="act ghost" id="exportBtn">Export</button>
       <button class="act ghost" id="wipeBtn">Erase all</button>
     </div>
 
     <div id="exportBox" class="hidden">
-      <p class="note">Copy this into your notes or email it to yourself. Do this every night. Settings are included at the bottom.</p>
+      <p class="note">Copy this into your notes or email it to yourself. Do this every night. Settings are appended at the bottom.</p>
       <textarea id="exportText" readonly></textarea>
     </div>
   </section>
@@ -348,14 +659,23 @@
 (function(){
   "use strict";
 
-  var KEY = "hms_buying_tool_v4";
+  var KEY = "hms_buying_tool_v6";
   var state = { entries: [], settings: {} };
   var editIndex = null;
+  var migrated = 0;
 
-  var SETTING_IDS = ["sRate","sMult","sGate","sSafe","sDisc","sFreight","sFixed","sPieces",
-    "sOrigin","sFul","sPack","sProc","sPlat","sProv","sDuty","sFloor","sCubic",
-    "sPost1","sPost3","sPost5","sPost9","sCapBali","sCapJava"];
-  var INPUT_IDS = ["maker","piece","local","target","hours","materials","dl","dw","dh","kg","units"];
+  var SETTING_IDS = ["sFloorRate","sLiving","sLivingSrc","sOh","sPm","sPmMethod","sRate",
+    "sGate","sSafe","sDisc","sFixed","sMarginal","sConsCbm","sPieces","sOrigin","sDuty",
+    "sFul","sPack","sProc","sPlat","sProv","sCubic","sPost1","sPost3","sPost5","sPost9",
+    "sSkuTarget","sSkuMax","sUnitTarget","sUnitMax","sQtyMin","sQtyCeil","sSkuExp",
+    "sMakerWarn","sMakerMax","sCatSku","sCatUnit","sCatBudget","sCatCbm",
+    "sBulkyBudget","sBulkyCbm","sMinBillable",
+    "phase","sTotalCash","sReserve","sCapital","sAirPiece","sStockWarn","sPackBudget","sContingency","sCapBali","sCapJava"];
+  var INPUT_IDS = ["maker","piece","negotiated","local","hours","materials","ohUnit","agreedRate",
+    "confBy","dl","dw","dh","kg","units","target","components","setContents",
+    "c1n","c1q","c1p","c2n","c2q","c2p","c3n","c3q","c3p"];
+  var CLEARABLE = ["piece","negotiated","local","hours","materials","ohUnit","agreedRate","dl","dw","dh","kg","target","justify","setContents",
+    "c1n","c1q","c1p","c2n","c2q","c2p","c3n","c3q","c3p"];
 
   function $(id){ return document.getElementById(id); }
   function num(id){ var v = parseFloat($(id).value); return isNaN(v) ? 0 : v; }
@@ -371,6 +691,25 @@
         var p = JSON.parse(raw);
         if (p && Array.isArray(p.entries)) state.entries = p.entries;
         if (p && p.settings) state.settings = p.settings;
+        return;
+      }
+      /* one-time migration from the previous ledger, never overwrites an existing one */
+      var oldRaw = localStorage.getItem("hms_buying_tool_v5");
+      if (oldRaw){
+        var o = JSON.parse(oldRaw);
+        if (o && Array.isArray(o.entries)){
+          state.entries = o.entries.map(function(e){
+            var r = {};
+            Object.keys(e).forEach(function(k){ r[k] = e[k]; });
+            if (!r.category) r.category = "";
+            if (!r.stage) r.stage = "initial";
+            if (r.negotiated === undefined && r.stated) r.negotiated = r.stated;
+            return r;
+          });
+          migrated = state.entries.length;
+        }
+        if (o && o.settings) state.settings = o.settings;
+        save();
       }
     } catch(e){}
   }
@@ -392,265 +731,511 @@
     return num("sPost9");
   }
   function postLabel(kg, cubic){
-    var basis = cubic ? " by cubic weight" : "";
-    if (kg < 1)  return "Domestic post, under 1kg" + basis;
-    if (kg < 3)  return "Domestic post, 1 to 3kg" + basis;
-    if (kg <= 5) return "Domestic post, 3 to 5kg" + basis;
-    return "Domestic post, over 5kg" + basis;
+    var b = cubic ? " by cubic weight" : "";
+    if (kg < 1)  return "Domestic post, under 1kg" + b;
+    if (kg < 3)  return "Domestic post, 1 to 3kg" + b;
+    if (kg <= 5) return "Domestic post, 3 to 5kg" + b;
+    return "Domestic post, over 5kg" + b;
   }
 
-  /* Single source of truth. Form and ledger both run through this.
-     Logistics always use live settings. A purchased piece keeps the rate it was paid at. */
+  function freightPerPiece(){
+    var cons = num("sConsCbm"), pieces = num("sPieces") || 1;
+    var total = num("sFixed") + Math.max(0, cons - 1) * num("sMarginal");
+    return { total: total, each: total / pieces };
+  }
+
   function core(p){
+    var hmsFloor = num("sFloorRate"), living = num("sLiving");
+    var ohPc = num("sOh")/100, pmPc = num("sPm")/100, pmMethod = $("sPmMethod").value;
     var liveRate = num("sRate") || 10400;
-    var mult   = num("sMult");
-    var gate   = num("sGate") / 100;
-    var safe   = num("sSafe") / 100;
-    var disc   = num("sDisc") / 100;
-    var frRate = num("sFreight");
-    var fixedChg = num("sFixed");
-    var pieces = num("sPieces") || 1;
-    var origin = num("sOrigin");
-    var ful    = num("sFul");
-    var pack   = num("sPack");
-    var procPc = num("sProc") / 100;
-    var plat   = num("sPlat");
-    var prov   = num("sProv");
-    var dutyPc = num("sDuty") / 100;
-    var floor  = num("sFloor");
-    var cubicPerCbm = num("sCubic") || 250;
+    var gate = num("sGate")/100, safe = num("sSafe")/100, disc = num("sDisc")/100;
+    var origin = num("sOrigin"), dutyPc = num("sDuty")/100;
+    var ful = num("sFul"), pack = num("sPack"), procPc = num("sProc")/100;
+    var plat = num("sPlat"), prov = num("sProv"), cubicPerCbm = num("sCubic") || 250;
 
-    var locked = p.status === "purchased" && p.paidRate > 0;
+    /* effective labour rate: highest of floor, living wage, maker's own rate */
+    var effRate = Math.max(hmsFloor, living, p.agreedRate || 0);
+
+    /* production floor */
+    var canFloor = p.hours > 0 && p.materials > 0;
+    var labour = p.hours * effRate;
+    var base = p.materials + labour;
+    var ohDefault = !(p.ohUnit > 0);
+    var oh = ohDefault ? base * ohPc : p.ohUnit;
+    var afterOh = base + oh;
+    var profit = pmMethod === "markup" ? afterOh * pmPc : afterOh * (pmPc/(1-pmPc));
+    var floorIdr = canFloor ? afterOh + profit : 0;
+
+    /* payment = higher of the two */
+    var liveIdr = 0, basis = "none";
+    if (p.negotiated > 0 && canFloor){
+      liveIdr = Math.max(p.negotiated, floorIdr);
+      basis = floorIdr > p.negotiated ? "uplifted" : "negotiated";
+    } else if (p.negotiated > 0){
+      liveIdr = p.negotiated;
+      basis = p.attest ? "attested" : "unverified";
+    }
+
+    var locked = p.status === "purchased" && p.paidRate > 0 && p.paidIdr > 0;
     var rate = locked ? p.paidRate : liveRate;
-    var makerIdr = locked && p.paidIdr > 0 ? p.paidIdr : p.localIdr * mult;
-    var makerAud = makerIdr / rate;
-    var localAud = p.localIdr / liveRate;
+    var makerIdr = locked ? p.paidIdr : liveIdr;
+    var makerAud = rate > 0 ? makerIdr / rate : 0;
+    var localAud = p.localIdr > 0 ? p.localIdr / liveRate : 0;
 
-    /* packed dimensions are used as given, no packing factor */
+    /* logistics */
     var cbm = (p.dl * p.dw * p.dh) / 1000000;
     var cubicKg = cbm * cubicPerCbm;
     var usedCubic = p.kg > 0 && cubicKg > p.kg;
     var chargeKg = Math.max(p.kg, cubicKg);
+    var post = postFor(chargeKg);
+    var isSample = p.stage === "sample";
+    var fr = isSample ? { total:0, each:num("sAirPiece") } : freightPerPiece();
 
-    var post    = postFor(chargeKg);
-    var list    = disc < 1 ? p.target / (1 - disc) : p.target;
-    var paid    = p.target;
-    var net     = paid / 1.1;
-    var gst     = paid - net;
-    var freight = cbm * frRate;
-    var clear   = fixedChg / pieces;
-    var duty    = makerAud * dutyPc;
-    var proc    = paid * procPc;
+    var list = disc < 1 ? p.target/(1-disc) : p.target;
+    var paid = p.target, net = paid/1.1, gst = paid - net;
+    var duty = makerAud * dutyPc, proc = paid * procPc;
 
-    var fixed = makerAud + origin + freight + clear + post + ful + pack + plat + prov + duty;
-    var hms   = net - fixed - proc;
-    var margin = net > 0 ? hms / net : 0;
+    var fixedCosts = makerAud + origin + fr.each + post + ful + pack + plat + prov + duty;
+    var hms = net - fixedCosts - proc;
+    var margin = net > 0 ? hms/net : 0;
 
-    var denom  = (1 - gate) / 1.1 - procPc;
-    var denomS = (1 - safe) / 1.1 - procPc;
-    var minPaid  = denom  > 0 ? fixed / denom  : 0;
-    var safePaid = denomS > 0 ? fixed / denomS : 0;
+    var den = (1-gate)/1.1 - procPc, denS = (1-safe)/1.1 - procPc;
+    var minPaid = den > 0 ? fixedCosts/den : 0;
+    var safePaid = denS > 0 ? fixedCosts/denS : 0;
 
-    /* maker floor */
-    var measured = p.hours > 0 && p.materials > 0;
-    var hourlyIdr = measured ? (makerIdr - p.materials) / p.hours : 0;
-    var floorState;                       // "pass" | "fail" | "attested" | "unverified"
-    if (measured) floorState = hourlyIdr >= floor ? "pass" : "fail";
-    else if (p.attest) floorState = "attested";
-    else floorState = "unverified";
+    /* ethical verdict */
+    var eth;
+    if (basis === "none") eth = "incomplete";
+    else if (basis === "unverified") eth = "unverified";
+    else eth = "pass";
 
-    var missing = [];
-    if (!(p.dl > 0 && p.dw > 0 && p.dh > 0)) missing.push("packed dimensions");
-    if (!(p.kg > 0)) missing.push("packed weight");
+    /* commercial verdict */
+    var comMissing = [];
+    if (!(p.dl>0 && p.dw>0 && p.dh>0)) comMissing.push("dimensions");
+    if (!(p.kg>0)) comMissing.push("weight");
+    if (!(p.target>0)) comMissing.push("price");
+    var com;
+    if (comMissing.length || basis === "none") com = "incomplete";
+    else if (margin < gate) com = "reject";
+    else if (margin >= safe) com = "buy";
+    else com = "border";
 
-    var status;
-    if (missing.length)            status = "incomplete";
-    else if (margin < gate)        status = "walk";
-    else if (floorState === "fail") status = "floorfail";
-    else if (floorState === "unverified") status = "unverified";
-    else if (margin >= safe)       status = "buy";
-    else                           status = "border";
+    var final;
+    if (eth !== "pass" || com === "incomplete") final = "wait";
+    else if (com === "reject") final = "reject";
+    else if (com === "buy") final = "buy";
+    else final = "border";
 
     return {
-      locked:locked, rate:rate, localAud:localAud, makerAud:makerAud, makerIdr:makerIdr,
+      effRate:effRate, canFloor:canFloor, ohDefault:ohDefault,
+      materials:p.materials, labour:labour, oh:oh, profit:profit, floorIdr:floorIdr,
+      negotiated:p.negotiated, basis:basis, uplift: floorIdr > p.negotiated ? floorIdr - p.negotiated : 0,
+      locked:locked, rate:rate, makerIdr:makerIdr, makerAud:makerAud, localAud:localAud,
       cbm:cbm, chargeKg:chargeKg, usedCubic:usedCubic,
       list:list, paid:paid, net:net, gst:gst,
-      origin:origin, freight:freight, clear:clear, fixedChg:fixedChg, pieces:pieces,
+      origin:origin, freight:fr.each, freightTotal:fr.total,
       post:post, postLbl:postLabel(chargeKg, usedCubic), ful:ful, pack:pack,
       proc:proc + plat, prov:prov, duty:duty,
       hms:hms, margin:margin, gate:gate, safe:safe,
-      minPaid:minPaid,  minList:  disc < 1 ? minPaid /(1-disc) : minPaid,
-      safePaid:safePaid, safeList: disc < 1 ? safePaid/(1-disc) : safePaid,
-      hourlyIdr:hourlyIdr, floor:floor, floorState:floorState, measured:measured,
-      missing:missing, status:status,
-      multipleOfLocal: localAud > 0 ? paid / localAud : 0
+      minPaid:minPaid, minList: disc<1 ? minPaid/(1-disc) : minPaid,
+      safePaid:safePaid, safeList: disc<1 ? safePaid/(1-disc) : safePaid,
+      contribPerCbm: cbm > 0 ? hms/cbm : 0,
+      comMissing:comMissing, eth:eth, com:com, final:final,
+      multipleOfLocal: localAud > 0 && paid > 0 ? paid/localAud : 0
     };
+  }
+
+  function componentRows(){
+    var rows = [];
+    [["c1n","c1q","c1p"],["c2n","c2q","c2p"],["c3n","c3q","c3p"]].forEach(function(r){
+      var q = num(r[1]), pr = num(r[2]);
+      if (q > 0 && pr > 0) rows.push({name:$(r[0]).value.trim(), qty:q, price:pr});
+    });
+    return rows;
+  }
+  function componentTotal(){
+    return componentRows().reduce(function(a,r){ return a + r.qty*r.price; }, 0);
+  }
+  function componentPieces(){
+    return componentRows().reduce(function(a,r){ return a + r.qty; }, 0);
   }
 
   function formParams(){
     return {
-      localIdr: num("local"), target: num("target"),
-      dl: num("dl"), dw: num("dw"), dh: num("dh"), kg: num("kg"),
-      hours: num("hours"), materials: num("materials"),
-      attest: $("attest").checked,
-      status: "planned"   // form always prices live; lock happens on save
+      negotiated:num("negotiated"), localIdr:num("local"),
+      hours:num("hours"), materials:num("materials"),
+      ohUnit:num("ohUnit"), agreedRate:num("agreedRate"),
+      target:num("target"),
+      dl:num("dl"), dw:num("dw"), dh:num("dh"), kg:num("kg"),
+      attest:$("attest").checked, stage:$("stage").value, status:"planned",
+      format:$("format").value, components:Math.max(1, num("components"))
     };
   }
 
   function validate(){
-    var problems = [];
-    if (!$("maker").value.trim()) problems.push("maker name");
-    if (!$("piece").value.trim()) problems.push("piece name");
-    if (num("units") <= 0) problems.push("units");
-    return problems;
+    var p = [];
+    if (!$("maker").value.trim()) p.push("maker name");
+    if (!$("piece").value.trim()) p.push("piece name");
+    if (!$("category").value) p.push("a category");
+    if (num("units") <= 0) p.push("units");
+    if ($("attest").checked && !$("confBy").value.trim()) p.push("who confirmed it");
+    return p;
+  }
+
+  function setCard(el, cls, title, detail){
+    el.className = "vcard " + cls;
+    el.querySelector(".st").textContent = title;
+    el.querySelector(".dt").textContent = detail;
+  }
+
+  /* runs before anything reads the fields, so the verdict never lags a keystroke */
+  function syncFormat(){
+    var fmt = $("format").value, isSet = fmt !== "single";
+    var comps = Math.max(1, num("components"));
+    $("contentsWrap").classList.toggle("hidden", !isSet);
+    $("basisWrap").classList.toggle("hidden", !isSet);
+    var byComponent = isSet && $("priceBasis").value === "component";
+    $("compWrap").classList.toggle("hidden", !byComponent);
+    if (byComponent){
+      var ct = componentTotal(), cp = componentPieces();
+      if (ct > 0) $("negotiated").value = Math.round(ct);
+      if (cp > 0){ $("components").value = cp; comps = cp; }
+      $("negNote").classList.remove("hidden");
+      $("negNote").textContent = "Built from the component rows above.";
+      $("negotiated").readOnly = true;
+    } else {
+      $("negNote").classList.add("hidden");
+      $("negotiated").readOnly = false;
+    }
+    $("negLbl").textContent = isSet
+      ? "Maker's negotiated price for one complete unit, Rp"
+      : "Maker's negotiated price for HMS, Rp";
+    $("unitsLbl").textContent = isSet ? (fmt === "set" ? "Sets" : "Bundles") : "Units";
+    return { fmt:fmt, isSet:isSet, comps:comps, byComponent:byComponent };
   }
 
   function render(){
+    var f = syncFormat();
+    var fmt = f.fmt, isSet = f.isSet, comps = f.comps;
     var p = formParams();
-    var ready = p.localIdr > 0 && p.target > 0;
     var c = core(p);
 
-    var v = $("verdict");
-    var word = v.querySelector(".word");
-    var mg = v.querySelector(".margin");
-    var why = v.querySelector(".why");
+    /* section 4 */
+    $("payIdr").textContent = c.makerIdr > 0 ? rp(c.makerIdr) : "Rp 0";
+    $("payAud").textContent = c.makerIdr > 0
+      ? aud(c.makerAud) + "  ·  " + num("units") + " units = " + aud(c.makerAud * num("units"))
+      : "Enter their price in section 2";
 
-    $("dl").classList.toggle("need", ready && !(p.dl>0));
-    $("dw").classList.toggle("need", ready && !(p.dw>0));
-    $("dh").classList.toggle("need", ready && !(p.dh>0));
-    $("kg").classList.toggle("need", ready && !(p.kg>0));
+    var ft = $("fairTable");
+    if (c.canFloor){
+      ft.classList.remove("hidden");
+      $("fMat").textContent = rp(c.materials);
+      $("fLabLbl").textContent = "Labour, " + p.hours + "h at " + rp(c.effRate);
+      $("fLab").textContent = rp(c.labour);
+      $("fOhLbl").textContent = "Overhead" + (c.ohDefault ? " (default " + num("sOh") + "%)" : " (their figure)");
+      $("fOh").textContent = rp(c.oh);
+      $("fPmLbl").textContent = "Maker profit " + num("sPm") + "%";
+      $("fPm").textContent = rp(c.profit);
+      $("fFloor").textContent = rp(c.floorIdr);
+      $("fAsk").textContent = p.negotiated > 0 ? rp(p.negotiated) : "not yet asked";
+    } else ft.classList.add("hidden");
 
-    var canSave = false;
+    var ff = $("fairFlag"), flags = [], good = false;
+    if (c.basis === "uplifted"){
+      flags.push("Their price is below the production floor. Offer " + rp(c.floorIdr)
+        + ", which is " + rp(c.uplift) + " more than they asked.");
+    } else if (c.basis === "negotiated"){
+      flags.push("Their price is at or above the production floor. Pay what they asked.");
+      good = true;
+    } else if (c.basis === "attested"){
+      flags.push("Their price, confirmed verbally. No cost breakdown to verify it against.");
+    } else if (c.basis === "unverified"){
+      flags.push("No hours or materials and no confirmation. Get one or the other before buying.");
+    }
+    if (flags.length){ ff.classList.remove("hidden"); ff.className = "flagline" + (good ? " good" : ""); ff.textContent = flags.join(" "); }
+    else ff.classList.add("hidden");
 
-    if (!ready){
-      v.className = "verdict";
-      word.textContent = "—";
-      mg.textContent = "Enter a local price and a target price";
-      why.textContent = "";
-    } else if (c.status === "incomplete"){
-      v.className = "verdict incomplete";
-      word.textContent = "INCOMPLETE";
-      mg.textContent = "Measure it before you decide";
-      why.textContent = "Missing " + c.missing.join(" and ") + ". Freight and postage are the costs most likely to kill a piece.";
-    } else if (c.status === "walk"){
-      v.className = "verdict fail";
-      word.textContent = "WALK";
-      mg.textContent = (c.margin*100).toFixed(1) + "% margin  ·  " + c.multipleOfLocal.toFixed(1) + "× local";
-      why.textContent = "Needs " + aud0(c.minPaid) + " to clear the floor, listed at " + aud0(c.minList) + ".";
-      canSave = true;
-    } else if (c.status === "floorfail"){
-      v.className = "verdict fail";
-      word.textContent = "WALK";
-      mg.textContent = "Maker floor failed";
-      why.textContent = rp(c.hourlyIdr) + " an hour after materials, below the " + rp(c.floor)
-        + " floor. The margin is fine. The local price is too low, so talk about the price rather than walking away.";
-      canSave = true;
-    } else if (c.status === "unverified"){
-      v.className = "verdict incomplete";
-      word.textContent = "MAKER FLOOR UNVERIFIED";
-      mg.textContent = (c.margin*100).toFixed(1) + "% margin";
-      why.textContent = "Commercially it works. Enter hours and materials, or tick the confirmation, before this becomes a buy.";
+    /* section 6 */
+    $("listPrice").textContent = c.list > 0 ? aud0(c.list) : "A$0";
+
+    /* section 7 */
+    $("dl").classList.toggle("need", !(p.dl>0));
+    $("dw").classList.toggle("need", !(p.dw>0));
+    $("dh").classList.toggle("need", !(p.dh>0));
+    $("kg").classList.toggle("need", !(p.kg>0));
+
+    if (c.eth === "incomplete") setCard($("vEth"), "wait", "WAITING", "Need their price");
+    else if (c.eth === "unverified") setCard($("vEth"), "fail", "UNVERIFIED", "No breakdown, no confirmation");
+    else if (c.basis === "uplifted") setCard($("vEth"), "pass", "PASS", "Uplifted to the floor");
+    else if (c.basis === "attested") setCard($("vEth"), "pass", "PASS", "Confirmed, not measured");
+    else setCard($("vEth"), "pass", "PASS", "Verified against cost");
+
+    if (c.com === "incomplete") setCard($("vCom"), "wait", "WAITING", "Need " + c.comMissing.join(", "));
+    else if (c.com === "reject") setCard($("vCom"), "fail", "REJECT", (c.margin*100).toFixed(1) + "%, needs " + aud0(c.minPaid));
+    else if (c.com === "border") setCard($("vCom"), "border", "BORDERLINE", (c.margin*100).toFixed(1) + "%, safe at " + aud0(c.safePaid));
+    else setCard($("vCom"), "pass", "BUY", (c.margin*100).toFixed(1) + "% margin");
+
+    /* quantity and collection gates */
+    var u = num("units"), ceil = num("sQtyCeil"), qmin = num("sQtyMin");
+    var physical = u * comps;
+    $("physNote").classList.toggle("hidden", !isSet);
+    if (isSet) $("physNote").textContent = u + (fmt === "set" ? " sellable sets" : " bundles")
+      + " · " + physical + " physical pieces to check and pack";
+    $("setCostNote").classList.toggle("hidden", !isSet);
+    if (isSet) $("setCostNote").textContent = "Hours, materials and overhead for one complete unit of "
+      + comps + " pieces, not per piece.";
+    $("dimNote").classList.toggle("hidden", !isSet);
+    if (isSet) $("dimNote").textContent = "One complete unit packed as the customer receives it, folded and nested. Not " + comps + " times a single piece.";
+
+    var stage = $("stage").value, isSample = stage === "sample";
+    $("justWrap").classList.toggle("hidden", isSample || !(u > ceil));
+
+    var cand = {maker:$("maker").value.trim(), piece:$("piece").value.trim(),
+      category:$("category").value, stage:stage, region:$("region").value, status:"planned",
+      format:fmt, components:comps,
+      negotiated:p.negotiated, localIdr:p.localIdr, hours:p.hours, materials:p.materials,
+      ohUnit:p.ohUnit, agreedRate:p.agreedRate, attest:p.attest,
+      target:p.target, dl:p.dl, dw:p.dw, dh:p.dh, kg:p.kg, units:u};
+    var col = collection(cand, editIndex);
+    var colBlock = [], colFewer = [];
+    if (col.skus > num("sSkuMax")) colBlock.push("SKU maximum of " + num("sSkuMax") + " reached");
+    if (isSample){
+      if (u !== 1) colFewer.push("a sample is exactly one sellable unit. Switch the stage if you want production quantity");
     } else {
-      var cls = c.status === "buy" ? "pass" : "border";
-      v.className = "verdict " + cls;
-      word.textContent = c.status === "buy" ? "BUY" : "BORDERLINE";
-      mg.textContent = (c.margin*100).toFixed(1) + "% margin  ·  " + c.multipleOfLocal.toFixed(1) + "× local";
-      var tail = c.floorState === "attested" ? " Maker floor confirmed verbally, not measured." : "";
-      why.textContent = (c.status === "buy"
-        ? "Comfortable. Still clears the floor down to " + aud0(c.minPaid) + "."
-        : "Above the floor but one bad estimate from failing. " + aud0(c.safePaid) + " would make it comfortable, listed at " + aud0(c.safeList) + ".") + tail;
+      if (col.prodUnits > num("sUnitMax")) colFewer.push("unit maximum of " + num("sUnitMax") + " exceeded");
+      if (u > ceil && !$("justify").value) colFewer.push("more than " + ceil + " units needs a documented reason");
+      if (u > 0 && u < qmin) colFewer.push("below the " + qmin + " unit minimum");
+    }
+    if (c.makerAud * u > num("sSkuExp")) colFewer.push("this SKU alone would take " + aud0(c.makerAud*u) + ", above the " + aud0(num("sSkuExp")) + " limit");
+    var linked = $("skuLink").value;
+    var dupe = !linked && state.entries.some(function(e, i){
+      return i !== editIndex && (e.maker||"").toLowerCase() === (cand.maker||"").toLowerCase()
+        && (e.piece||"").toLowerCase() === (cand.piece||"").toLowerCase() && cand.piece; });
+
+    var fin = $("final"), fw = fin.querySelector(".word"), fy = fin.querySelector(".why");
+    var canSave = false, saveNote = "";
+    if (c.final === "wait"){
+      fin.className = "final wait"; fw.textContent = "NOT YET";
+      fy.textContent = c.eth === "unverified"
+        ? "The maker payment test has not passed. Get hours and materials, or tick the confirmation."
+        : "Still filling in.";
+    } else if (c.final === "reject"){
+      fin.className = "final fail"; fw.textContent = "DO NOT BUY";
+      fy.textContent = "Payment is fair but the economics fail. Needs " + aud0(c.minPaid)
+        + ", listed at " + aud0(c.minList) + ". Save as review or rejected.";
+      canSave = true; saveNote = "review";
+    } else if (colBlock.length){
+      fin.className = "final fail"; fw.textContent = "COLLECTION FULL";
+      fy.textContent = colBlock.join(". ") + ". Remove something or save this as review.";
+      canSave = true; saveNote = "review";
+    } else if (colFewer.length){
+      fin.className = "final border"; fw.textContent = "BUY FEWER";
+      fy.textContent = colFewer.join(". ") + ".";
+      canSave = false;
+    } else if (isSample){
+      fin.className = "final pass"; fw.textContent = "BUY SAMPLE";
+      fy.textContent = (isSet ? "One complete " + comps + " piece unit to test. " : "One piece to test. ")
+        + "Counts toward spend and volume, not toward production depth."
+        + (c.final === "border" ? " Margin is tight at " + (c.margin*100).toFixed(1) + "%." : "");
+      canSave = true;
+    } else if (c.final === "border"){
+      fin.className = "final border"; fw.textContent = "BORDERLINE";
+      fy.textContent = "Both tests pass but there is no room for error. " + aud0(c.safePaid)
+        + " would make it comfortable, listed at " + aud0(c.safeList) + ".";
+      canSave = true;
+    } else {
+      fin.className = "final pass"; fw.textContent = "BUY";
+      fy.textContent = "Both tests pass. Clears the margin floor down to " + aud0(c.minPaid) + ".";
       canSave = true;
     }
 
     var problems = validate();
-    var vm = $("validMsg");
-    if (canSave && problems.length){
-      vm.classList.remove("hidden");
-      vm.textContent = "Add " + problems.join(", ") + " to save.";
+    var vm = $("validMsg"), msgs = [];
+    if (canSave && problems.length){ msgs.push("Add " + problems.join(", ") + " to save."); canSave = false; }
+    if (saveNote === "review" && $("status").value !== "review" && $("status").value !== "rejected"){
+      msgs.push("Set status to review or rejected. A piece that fails the margin gate cannot be recorded as purchased.");
       canSave = false;
-    } else { vm.classList.add("hidden"); }
+    }
+    if (dupe) msgs.push("A piece with this maker and name already exists. Pick it in the SKU list to add a batch, or use a distinct name.");
+    if (msgs.length){ vm.classList.remove("hidden"); vm.textContent = msgs.join(" "); }
+    else vm.classList.add("hidden");
     $("save").disabled = !canSave;
 
-    $("payIdr").textContent = rp(c.makerIdr);
-    var units = num("units");
-    $("payAud").textContent = aud(c.makerAud) + "  ·  " + units + " units = " + aud(c.makerAud * units);
-
-    var hrEl = $("payHr");
-    if (c.measured && c.makerIdr > 0){
-      hrEl.classList.remove("hidden");
-      var low = c.floorState === "fail";
-      hrEl.className = "hr" + (low ? " low" : "");
-      hrEl.textContent = rp(c.hourlyIdr) + " an hour after materials, over " + p.hours + "h"
-        + (low ? "  ·  below the " + rp(c.floor) + " floor" : "  ·  clears the " + rp(c.floor) + " floor");
-    } else if (p.hours > 0 || p.materials > 0){
-      hrEl.classList.remove("hidden");
-      hrEl.className = "hr";
-      hrEl.textContent = "Need both hours and materials to work out the labour rate.";
-    } else { hrEl.classList.add("hidden"); }
-
-    $("listPrice").textContent = c.list > 0 ? aud0(c.list) : "A$0";
-
-    $("bdPaid").textContent    = aud(c.paid);
-    $("bdGst").textContent     = "-" + aud(c.gst);
-    $("bdNet").textContent     = aud(c.net);
-    $("bdMaker").textContent   = "-" + aud(c.makerAud);
-    $("bdOrigin").textContent  = "-" + aud(c.origin);
-    $("bdFreightLbl").textContent = c.cbm > 0 ? "Inbound freight" : "Inbound freight (no dimensions)";
+    $("bdPaid").textContent = aud(c.paid);
+    $("bdGst").textContent = "-" + aud(c.gst);
+    $("bdNet").textContent = aud(c.net);
+    $("bdMaker").textContent = "-" + aud(c.makerAud);
+    $("bdOrigin").textContent = "-" + aud(c.origin);
+    $("bdFreightLbl").textContent = isSample
+      ? "Sample airfreight allowance, per piece"
+      : "Inbound sea freight (A$" + Math.round(c.freightTotal) + " over " + num("sPieces") + ")";
     $("bdFreight").textContent = "-" + aud(c.freight);
-    $("bdFreight").className   = c.cbm > 0 ? "" : "est";
-    $("bdFixedLbl").textContent = "Clearance and port (A$" + Math.round(c.fixedChg) + " over " + c.pieces + ")";
-    $("bdFixed").textContent   = "-" + aud(c.clear);
     $("bdPostLbl").textContent = c.postLbl;
-    $("bdPost").textContent    = "-" + aud(c.post);
-    $("bdPost").className      = p.kg > 0 ? "" : "est";
-    $("bdFul").textContent     = "-" + aud(c.ful);
-    $("bdPack").textContent    = "-" + aud(c.pack);
-    $("bdProc").textContent    = "-" + aud(c.proc);
-    $("bdProv").textContent    = "-" + aud(c.prov);
-    $("bdDuty").textContent    = "-" + aud(c.duty);
-    $("bdHms").textContent     = aud(c.hms);
-    $("bdCbm").textContent     = c.cbm.toFixed(4) + " cbm"
+    $("bdPost").textContent = "-" + aud(c.post);
+    $("bdPost").className = p.kg > 0 ? "" : "est";
+    $("bdFul").textContent = "-" + aud(c.ful);
+    $("bdPack").textContent = "-" + aud(c.pack);
+    $("bdProc").textContent = "-" + aud(c.proc);
+    $("bdProv").textContent = "-" + aud(c.prov);
+    $("bdDuty").textContent = "-" + aud(c.duty);
+    $("bdHms").textContent = aud(c.hms);
+    $("bdPerCbm").textContent = c.cbm > 0 ? aud0(c.contribPerCbm) + " per cbm" : "-";
+    $("bdCbm").textContent = c.cbm.toFixed(4) + " cbm"
       + (c.usedCubic ? "  ·  charged at " + c.chargeKg.toFixed(1) + "kg cubic" : "");
 
-    $("hdrRate").textContent = "Rp " + Math.round(num("sRate")).toLocaleString("en-US") + " / A$1";
+    $("hdrRate").textContent = "Rp " + Math.round(num("sRate")).toLocaleString("en-US") + "/A$1";
   }
 
-  function active(){ return state.entries.filter(function(e){ return e.status !== "rejected"; }); }
+  var PREFIX = {tabletop:"TAB", decor:"DEC", textiles:"TEX", storage:"STO", furniture:"FUR"};
+  function nextSkuId(cat){
+    var pre = PREFIX[cat] || "GEN", n = 0;
+    state.entries.forEach(function(e){
+      if (e.skuId && e.skuId.indexOf("HMS-" + pre + "-") === 0){
+        var v = parseInt(e.skuId.split("-")[2], 10);
+        if (!isNaN(v) && v > n) n = v;
+      }
+    });
+    return "HMS-" + pre + "-" + String(n+1).padStart(3, "0");
+  }
+  function skuIds(){
+    var seen = {}, out = [];
+    state.entries.forEach(function(e){
+      if (!e.skuId || seen[e.skuId]) return;
+      seen[e.skuId] = 1;
+      out.push({id:e.skuId, piece:e.piece, maker:e.maker, category:e.category});
+    });
+    return out;
+  }
+
+  var CATS = {tabletop:"Tabletop and kitchen", decor:"Decorative objects",
+    textiles:"Textiles and soft furnishings", storage:"Storage and organisation",
+    furniture:"Furniture and larger pieces"};
+
+  function counted(){ return state.entries.filter(function(e){
+    return e.status === "purchased" || e.status === "planned"; }); }
+
+  /* collection-level stats. pass a candidate to see the effect of adding it. */
+  function collection(candidate, skipIndex){
+    var list = [];
+    state.entries.forEach(function(e, i){
+      if (i === skipIndex) return;
+      if (e.status === "purchased" || e.status === "planned") list.push(e);
+    });
+    if (candidate) list = list.concat([candidate]);
+    var units = 0, cbm = 0, spend = 0;
+    var contribSum = 0, netSum = 0, prodUnits = 0, prodSkus = 0, sampleUnits = 0;
+    var prodCbm = 0, sampleCbm = 0, samplePieces = 0, prodPieces = 0;
+    var physical = 0, setUnits = 0, singleUnits = 0;
+    var idSet = {};
+    list.forEach(function(e){ idSet[e.skuId || (e.maker + "|" + e.piece)] = 1; });
+    var skus = Object.keys(idSet).length;
+    var byCat = {}, byMaker = {}, rows = [];
+    var prodIds = {};
+    list.forEach(function(e){
+      var c = core(e);
+      var sp = c.makerAud * e.units, vol = c.cbm * e.units;
+      var eid = e.skuId || (e.maker + "|" + e.piece);
+      var comps = Math.max(1, e.components || 1);
+      physical += e.units * comps;
+      if ((e.format || "single") === "single") singleUnits += e.units; else setUnits += e.units;
+      units += e.units; cbm += vol; spend += sp;
+      contribSum += c.hms * e.units; netSum += c.net * e.units;
+      if (e.stage === "sample"){
+        sampleUnits += e.units; sampleCbm += vol; samplePieces += e.units;
+      } else {
+        prodUnits += e.units; prodCbm += vol; prodPieces += e.units;
+        if (!prodIds[eid]){ prodIds[eid] = 1; prodSkus++; }
+      }
+      var k = e.category || "decor";
+      if (!byCat[k]) byCat[k] = {skus:0, units:0, spend:0, cbm:0, ids:{}};
+      if (!byCat[k].ids[eid]){ byCat[k].ids[eid] = 1; byCat[k].skus++; }
+      byCat[k].units += e.units; byCat[k].spend += sp; byCat[k].cbm += vol;
+      var m = (e.maker || "unnamed").toLowerCase();
+      byMaker[m] = (byMaker[m] || 0) + sp;
+      if (e.stage !== "sample")
+        rows.push({name:(e.piece||"Untitled"), cat:k, spend:sp, cbm:vol,
+          perCbm:c.contribPerCbm, share: 0});
+    });
+    rows.forEach(function(r){ r.share = prodCbm > 0 ? r.cbm/prodCbm : 0; });
+    rows.sort(function(a,b){ return b.share - a.share; });
+
+    var skuMax = 0, makerMax = 0;
+    list.forEach(function(e){ var c = core(e); skuMax = Math.max(skuMax, c.makerAud * e.units); });
+    Object.keys(byMaker).forEach(function(k){ makerMax = Math.max(makerMax, byMaker[k]); });
+
+    var catWorst = 0, catWorstName = "", catWorstMeasure = "";
+    var wSku = num("sCatSku")/100, wUnit = num("sCatUnit")/100,
+        wBud = num("sCatBudget")/100, wCbm = num("sCatCbm")/100;
+    Object.keys(byCat).forEach(function(k){
+      var d = byCat[k];
+      var m = [["SKUs", skus ? d.skus/skus : 0, wSku],
+               ["units", units ? d.units/units : 0, wUnit],
+               ["budget", spend ? d.spend/spend : 0, wBud],
+               ["cbm", cbm ? d.cbm/cbm : 0, wCbm]];
+      m.forEach(function(x){
+        var over = x[1] - x[2];
+        if (over > catWorst - 0.0001 && x[1] > x[2]){
+          catWorst = x[1]; catWorstName = CATS[k] || k; catWorstMeasure = x[0];
+        }
+      });
+    });
+
+    var bulky = byCat.furniture || {spend:0, cbm:0};
+    var minBill = num("sMinBillable") || 1;
+    var util = minBill > 0 ? prodCbm/minBill : 0;
+
+    return {
+      skus:skus, units:units, cbm:cbm, spend:spend,
+      prodUnits:prodUnits, prodSkus:prodSkus, sampleUnits:sampleUnits,
+      prodCbm:prodCbm, sampleCbm:sampleCbm, samplePieces:samplePieces, prodPieces:prodPieces,
+      physical:physical, setUnits:setUnits, singleUnits:singleUnits,
+      avg: prodSkus ? prodUnits/prodSkus : 0,
+      weighted: netSum > 0 ? contribSum/netSum : 0,
+      cats: byCat, catCount: Object.keys(byCat).length,
+      makers: byMaker, skuMax:skuMax, makerMax:makerMax,
+      catWorst:catWorst, catWorstName:catWorstName, catWorstMeasure:catWorstMeasure,
+      bulkyBudget: spend ? bulky.spend/spend : 0,
+      bulkyCbm: cbm ? bulky.cbm/cbm : 0,
+      util:util, minBill:minBill, rows:rows
+    };
+  }
 
   function capRow(region, amtId, barId, capId){
     var spend = 0;
-    active().forEach(function(e){
-      if (e.region === region) spend += core(e).makerAud * e.units;
-    });
-    var cap = num(capId);
-    var el = $(amtId);
+    counted().forEach(function(e){ if (e.region === region) spend += core(e).makerAud * e.units; });
+    var cap = num(capId), el = $(amtId);
     el.textContent = aud0(spend) + " of " + aud0(cap);
     el.className = "amt" + (spend > cap ? " over" : "");
     var bar = $(barId);
-    bar.style.width = (cap > 0 ? Math.min(100, spend / cap * 100) : 0) + "%";
+    bar.style.width = (cap > 0 ? Math.min(100, spend/cap*100) : 0) + "%";
     bar.className = spend > cap ? "over" : "";
     return spend;
   }
 
   function entryNode(e, i){
     var c = core(e);
+    var bad = c.com === "reject" || c.eth !== "pass";
     var el = document.createElement("div");
-    var bad = c.margin < c.gate || c.floorState === "fail";
-    el.className = "entry" + (e.status === "rejected" ? " rej" : (bad ? " flag" : ""));
+    el.className = "entry" + (e.status === "rejected" || e.status === "review" ? " rej" : (bad ? " flag" : ""));
 
     var top = document.createElement("div"); top.className = "top";
     var nm = document.createElement("div"); nm.className = "name";
-    nm.textContent = (e.piece || "Untitled") + " — " + (e.maker || "unnamed");
+    nm.textContent = (e.piece || "Untitled") + " · " + (e.maker || "unnamed");
     var tag = document.createElement("span");
     if (e.status === "planned"){ tag.className = "tag pl"; tag.textContent = "planned " + (c.margin*100).toFixed(0) + "%"; }
-    else { tag.className = "tag " + (bad ? "bad" : (c.margin < c.safe ? "bd" : "ok")); tag.textContent = (c.margin*100).toFixed(0) + "%"; }
+    else { tag.className = "tag " + (bad ? "bad" : (c.com === "border" ? "bd" : "ok")); tag.textContent = (c.margin*100).toFixed(0) + "%"; }
     top.appendChild(nm); top.appendChild(tag);
 
     var meta = document.createElement("div"); meta.className = "meta";
-    meta.textContent = (e.region === "java" ? "Central Java" : "Bali")
-      + "  ·  " + e.units + " × " + aud(c.makerAud) + " = " + aud(c.makerAud * e.units)
+    meta.textContent = (e.stage === "sample" ? "Sample · " : "")
+      + (CATS[e.category] || "Uncategorised")
+      + "  ·  " + (e.region === "java" ? "Central Java" : "Bali")
+      + "  ·  " + e.units + ((e.format || "single") !== "single"
+          ? " × " + (e.components || 1) + "pc " + (e.format === "set" ? "sets" : "bundles") : "")
+      + " × " + aud(c.makerAud) + " = " + aud(c.makerAud * e.units)
       + "  ·  list " + aud0(c.list)
-      + "  ·  " + (c.cbm * e.units).toFixed(3) + " cbm";
+      + "  ·  " + (c.cbm * e.units).toFixed(3) + " cbm"
+      + "  ·  " + c.basis;
     el.appendChild(top); el.appendChild(meta);
 
     if (c.locked){
@@ -658,41 +1243,31 @@
       lk.textContent = "Paid " + rp(c.makerIdr) + " on " + e.when + " at " + rp(c.rate) + " to A$1. Locked.";
       el.appendChild(lk);
     }
-    if (c.margin < c.gate){
-      var al = document.createElement("div"); al.className = "alert";
-      al.textContent = "Below the margin floor. Needs " + aud0(c.minPaid) + ", currently " + aud0(c.paid) + ".";
-      el.appendChild(al);
-    }
-    if (c.floorState === "fail"){
-      var al2 = document.createElement("div"); al2.className = "alert";
-      al2.textContent = "Maker rate " + rp(c.hourlyIdr) + " an hour, below the " + rp(c.floor) + " floor.";
-      el.appendChild(al2);
-    }
-    if (c.floorState === "unverified"){
-      var al3 = document.createElement("div"); al3.className = "alert";
-      al3.textContent = "Maker floor unverified. No hours, materials or confirmation.";
-      el.appendChild(al3);
-    }
+    [[c.com === "reject", "Below the margin floor. Needs " + aud0(c.minPaid) + ", currently " + aud0(c.paid) + "."],
+     [c.eth === "unverified", "Price unverified. No breakdown and no confirmation."],
+     [c.basis === "uplifted", "Uplifted " + rp(c.uplift) + " above what they asked, to reach the production floor."]
+    ].forEach(function(pr){
+      if (!pr[0]) return;
+      var a = document.createElement("div"); a.className = "alert"; a.textContent = pr[1];
+      el.appendChild(a);
+    });
 
     var btns = document.createElement("div"); btns.className = "btns";
     var ed = document.createElement("button");
     ed.className = "ed"; ed.type = "button"; ed.textContent = "Edit";
     ed.addEventListener("click", function(){ loadForEdit(i); });
     btns.appendChild(ed);
-
     if (e.status === "planned"){
       var mk = document.createElement("button");
       mk.className = "st"; mk.type = "button"; mk.textContent = "Mark purchased";
       mk.addEventListener("click", function(){
-        e.status = "purchased";
-        e.paidRate = num("sRate");
-        e.paidIdr = e.localIdr * num("sMult");
+        var cc = core(e);
+        e.status = "purchased"; e.paidRate = num("sRate"); e.paidIdr = cc.makerIdr;
         e.when = new Date().toISOString().slice(0,10);
         save(); renderLedger();
       });
       btns.appendChild(mk);
     }
-
     var del = document.createElement("button");
     del.className = "del"; del.type = "button"; del.textContent = "Remove";
     del.addEventListener("click", function(){
@@ -705,58 +1280,232 @@
   }
 
   function renderLedger(){
+    var col = collection(null, -1);
     var bali = capRow("bali","capBaliAmt","capBaliBar","sCapBali");
     var java = capRow("java","capJavaAmt","capJavaBar","sCapJava");
-    var budget = num("sCapBali") + num("sCapJava");
-    var spend = bali + java;
+    var makerSpend = bali + java;
 
-    var units = 0, cbm = 0, bad = 0, border = 0, unver = 0;
-    active().forEach(function(e){
+    var units = 0, cbm = 0, bad = 0, border = 0;
+    counted().forEach(function(e){
       var c = core(e);
       units += e.units; cbm += c.cbm * e.units;
-      if (c.margin < c.gate || c.floorState === "fail") bad++;
-      else if (c.margin < c.safe) border++;
-      if (c.floorState === "unverified") unver++;
+      if (c.com === "reject" || c.eth !== "pass") bad++;
+      else if (c.com === "border") border++;
     });
 
-    $("tSpend").textContent = aud0(spend);
-    var leftEl = $("tLeft");
-    leftEl.textContent = aud0(budget - spend);
-    leftEl.className = "v" + (budget - spend < 0 ? " over" : "");
-    $("tSkus").textContent = active().length;
+    var freightTotal = freightPerPiece().total;
+    var airTotal = col.samplePieces * num("sAirPiece");
+    var packB = num("sPackBudget"), cont = num("sContingency");
+    var committed = makerSpend + airTotal + freightTotal + packB + cont;
+    var capital = num("sCapital");
+
+    $("kCash").textContent = aud0(num("sTotalCash"));
+    $("kReserve").textContent = aud0(num("sReserve"));
+    $("kDeploy").textContent = aud0(num("sCapital"));
+    $("kMaker").textContent = aud0(makerSpend);
+    $("kAir").textContent = aud0(airTotal);
+    $("kFreight").textContent = aud0(freightTotal);
+    $("kPack").textContent = aud0(packB);
+    $("kCont").textContent = aud0(cont);
+    $("kTotal").textContent = aud0(committed);
+    var kl = $("kLeft");
+    kl.textContent = aud0(capital - committed);
+    kl.className = (capital - committed) < 0 ? "neg" : "";
+
+    var kw = $("kWarn"), warns = [];
+    if (capital - committed < 0) warns.push("Over budget by " + aud0(committed - capital) + ".");
+    if (makerSpend > num("sStockWarn")) warns.push("Stock spend is above " + aud0(num("sStockWarn")) + " while freight is still provisional.");
+    if (warns.length){ kw.classList.remove("hidden"); kw.textContent = warns.join(" "); }
+    else kw.classList.add("hidden");
+
+    $("cSkus").textContent = col.skus + " of " + num("sSkuMax") + " max, target " + num("sSkuTarget");
+    $("cUnits").textContent = col.prodUnits + " of " + num("sUnitMax") + " production units"
+      + (col.sampleUnits ? "  ·  " + col.sampleUnits + " sample" : "")
+      + ", target " + num("sUnitTarget");
+    $("cPhys").textContent = col.physical + " pieces to check and pack";
+    $("cFormats").textContent = col.setUnits + " set or bundle, " + col.singleUnits + " single";
+    $("cAvg").textContent = col.avg.toFixed(1) + " production units per SKU";
+    $("cCats").textContent = col.catCount;
+    $("cSampleShip").textContent = col.sampleCbm > 0
+      ? col.sampleCbm.toFixed(3) + " cbm · " + col.samplePieces + " pieces · air"
+      : "none";
+    $("cProdShip").textContent = col.prodCbm > 0
+      ? col.prodCbm.toFixed(3) + " cbm · " + col.prodPieces + " pieces · sea"
+      : "none";
+    var utilPc = col.util * 100;
+    $("cUtil").textContent = col.prodCbm <= col.minBill
+      ? col.prodCbm.toFixed(2) + " of first " + col.minBill.toFixed(2) + " cbm  ·  " + utilPc.toFixed(0) + "%"
+      : col.prodCbm.toFixed(2) + " cbm total, " + (col.prodCbm - col.minBill).toFixed(2) + " cbm at marginal rate";
+    $("cSkuMax").textContent = aud0(col.skuMax) + " of " + aud0(num("sSkuExp"));
+    $("cMakerMax").textContent = col.spend ? (col.makerMax/col.spend*100).toFixed(0) + "%" : "-";
+    $("cCatMax").textContent = col.catWorstName
+      ? col.catWorstName + ", " + (col.catWorst*100).toFixed(0) + "% by " + col.catWorstMeasure
+      : "within limits";
+    $("cBulky").textContent = (col.bulkyCbm*100).toFixed(0) + "% cbm, "
+      + (col.bulkyBudget*100).toFixed(0) + "% budget";
+    $("cMargin").textContent = (col.weighted*100).toFixed(1) + "%";
+
+    var cw = [], cv = $("collVerdict");
+    if (col.skus > num("sSkuMax")) cw.push("Over the SKU maximum.");
+    else if (col.skus > num("sSkuTarget")) cw.push("Above the SKU target of " + num("sSkuTarget") + ".");
+    if (col.units > num("sUnitMax")) cw.push("Over the unit maximum.");
+    if (col.skus && col.avg < num("sQtyMin")) cw.push("Average depth is only " + col.avg.toFixed(1) + " units per SKU.");
+    if (col.spend && col.makerMax/col.spend > num("sMakerMax")/100) cw.push("One maker holds " + (col.makerMax/col.spend*100).toFixed(0) + "% of spend, hard review.");
+    else if (col.spend && col.makerMax/col.spend > num("sMakerWarn")/100) cw.push("One maker holds " + (col.makerMax/col.spend*100).toFixed(0) + "% of spend.");
+    if (col.catWorstName) cw.push(col.catWorstName + " is " + (col.catWorst*100).toFixed(0) + "% by " + col.catWorstMeasure + ".");
+    if (col.bulkyCbm > num("sBulkyCbm")/100) cw.push("Bulky pieces take " + (col.bulkyCbm*100).toFixed(0) + "% of the cube.");
+    if (col.bulkyBudget > num("sBulkyBudget")/100) cw.push("Bulky pieces take " + (col.bulkyBudget*100).toFixed(0) + "% of the budget.");
+    if (col.skuMax > num("sSkuExp")) cw.push("One SKU exceeds " + aud0(num("sSkuExp")) + ".");
+
+    /* ---- six independent tests, none hides another ---- */
+    var makerPc = col.spend ? col.makerMax/col.spend*100 : 0;
+    var tests = [];
+
+    tests.push(["Collection size",
+      col.skus > num("sSkuMax") || col.prodUnits > num("sUnitMax") ? "FULL"
+        : (col.skus >= num("sSkuTarget") ? "AT TARGET" : "BUILDING"),
+      col.skus > num("sSkuMax") || col.prodUnits > num("sUnitMax") ? "bad"
+        : (col.skus >= num("sSkuTarget") ? "warn" : "ok"),
+      col.skus + " SKU, " + col.prodUnits + "u production"
+        + (col.sampleUnits ? " + " + col.sampleUnits + " sample" : "")]);
+
+    tests.push(["Category balance",
+      col.catWorstName ? "CONCENTRATED" : "BALANCED",
+      col.catWorstName ? "warn" : "ok",
+      col.catWorstName ? col.catWorstName + " " + (col.catWorst*100).toFixed(0) + "% by " + col.catWorstMeasure
+        : col.catCount + " categories"]);
+
+    tests.push(["Maker concentration",
+      makerPc > num("sMakerMax") ? "HIGH" : (makerPc > num("sMakerWarn") ? "WATCH" : "SPREAD"),
+      makerPc > num("sMakerMax") ? "bad" : (makerPc > num("sMakerWarn") ? "warn" : "ok"),
+      makerPc.toFixed(0) + "% with one maker"]);
+
+    var freightState = utilPc < 60 ? "INEFFICIENT" : (utilPc < 80 ? "REVIEW" : (utilPc <= 100 ? "EFFICIENT" : "SECOND BAND"));
+    tests.push(["Freight utilisation", freightState,
+      utilPc < 60 ? "bad" : (utilPc < 80 ? "warn" : "ok"),
+      utilPc <= 100 ? utilPc.toFixed(0) + "% of first " + col.minBill.toFixed(2) + " cbm, sea only"
+        : col.prodCbm.toFixed(2) + " cbm sea, " + (col.prodCbm - col.minBill).toFixed(2) + " at marginal rate"]);
+
+    var capOver = col.skuMax > num("sSkuExp") || col.spend > num("sStockWarn");
+    tests.push(["Capital", capOver ? "OVER" : "WITHIN LIMIT",
+      capOver ? "bad" : "ok",
+      aud0(col.spend) + " of " + aud0(num("sStockWarn")) + ", largest SKU " + aud0(col.skuMax)]);
+
+    var wm = col.weighted * 100;
+    tests.push(["Weighted economics", wm >= num("sSafe") ? "PASS" : (wm >= num("sGate") ? "THIN" : "FAIL"),
+      wm >= num("sSafe") ? "ok" : (wm >= num("sGate") ? "warn" : "bad"),
+      wm.toFixed(1) + "% on revenue"]);
+
+    var tt = $("testTable"); tt.innerHTML = "";
+    tests.forEach(function(t){
+      var tr = document.createElement("tr");
+      var a = document.createElement("td"); a.textContent = t[0];
+      var b = document.createElement("td");
+      b.textContent = t[1] + "  ·  " + t[3];
+      b.style.color = t[2] === "bad" ? "#A33A28" : (t[2] === "warn" ? "#B07A1E" : "#2F6B4F");
+      tr.appendChild(a); tr.appendChild(b); tt.appendChild(tr);
+    });
+
+    var anyBad = tests.some(function(t){ return t[2] === "bad"; });
+    var anyWarn = tests.some(function(t){ return t[2] === "warn"; });
+    var vw = cv.querySelector(".word"), vy = cv.querySelector(".why");
+    var phase = $("phase").value;
+    if (!col.skus){ cv.className = "final wait"; vw.textContent = "EMPTY"; vy.textContent = "Nothing recorded yet."; }
+    else if (phase === "sourcing"){
+      cv.className = (anyBad || anyWarn) ? "final border" : "final pass";
+      vw.textContent = "COLLECTION IN PROGRESS";
+      var flagged = tests.filter(function(t){ return t[2] !== "ok"; })
+        .map(function(t){ return t[0] + ": " + t[1]; });
+      vy.textContent = flagged.length
+        ? "Directional only while sourcing. " + flagged.join(". ") + ". These gates must pass before production orders are issued."
+        : "All six tests pass so far. Keep sourcing.";
+    }
+    else if (anyBad){
+      cv.className = "final fail"; vw.textContent = "STOP AND FIX";
+      vy.textContent = tests.filter(function(t){ return t[2] === "bad"; })
+        .map(function(t){ return t[0] + ": " + t[1]; }).join(". ")
+        + (utilPc < 60 ? ". On freight, get an air cargo comparison, ask about consolidating with other exporters, or delay the sailing. Do not buy filler." : ".");
+    } else if (anyWarn){
+      cv.className = "final border"; vw.textContent = "PROCEED WITH CARE";
+      vy.textContent = tests.filter(function(t){ return t[2] === "warn"; })
+        .map(function(t){ return t[0] + ": " + t[1]; }).join(". ") + ".";
+    } else {
+      cv.className = "final pass"; vw.textContent = "BALANCED";
+      vy.textContent = "All six tests pass. " + utilPc.toFixed(0) + "% of billable capacity, weighted margin " + wm.toFixed(1) + "%.";
+    }
+    var cwEl = $("cWarn");
+    if (cw.length){ cwEl.classList.remove("hidden"); cwEl.textContent = cw.join(" "); }
+    else cwEl.classList.add("hidden");
+
+    /* category table */
+    var ct = $("catTable"); ct.innerHTML = "";
+    Object.keys(col.cats).forEach(function(k){
+      var d = col.cats[k];
+      var tr = document.createElement("tr");
+      var a = document.createElement("td"); a.textContent = CATS[k] || k;
+      var b = document.createElement("td");
+      b.textContent = d.skus + " SKU, " + d.units + "u, " + aud0(d.spend)
+        + ", " + (col.cbm ? (d.cbm/col.cbm*100).toFixed(0) : 0) + "% cbm";
+      tr.appendChild(a); tr.appendChild(b); ct.appendChild(tr);
+    });
+    if (!Object.keys(col.cats).length) ct.innerHTML = "<tr><td>Nothing yet</td><td></td></tr>";
+
+    /* shipment space table */
+    var st = $("cbmTable"); st.innerHTML = "";
+    col.rows.slice(0,8).forEach(function(r){
+      var tr = document.createElement("tr");
+      var a = document.createElement("td"); a.textContent = r.name;
+      var b = document.createElement("td");
+      b.textContent = (r.share*100).toFixed(0) + "%  ·  " + aud0(r.perCbm) + "/cbm";
+      tr.appendChild(a); tr.appendChild(b); st.appendChild(tr);
+    });
+    if (!col.rows.length) st.innerHTML = "<tr><td>Nothing yet</td><td></td></tr>";
+
+    $("tSkus").textContent = counted().length;
     $("tUnits").textContent = units;
     $("tCbm").textContent = cbm.toFixed(3);
-    var badEl = $("tBad");
-    badEl.textContent = bad;
-    badEl.className = "v" + (bad > 0 ? " over" : "");
+    var be = $("tBad"); be.textContent = bad; be.className = "v" + (bad > 0 ? " over" : "");
 
-    $("liveNote").textContent = active().length
-      ? "Logistics recalculate live. Purchased payments stay locked at the rate paid. "
-        + bad + " below a floor, " + border + " borderline, " + unver + " unverified."
+    $("liveNote").textContent = counted().length
+      ? "Ledger volume is " + cbm.toFixed(2) + " cbm. Consignment setting is " + num("sConsCbm")
+        + " cbm over " + num("sPieces") + " pieces. Update both when they diverge."
       : "";
 
     var list = $("list"); list.innerHTML = "";
-    var rej  = $("rejList"); rej.innerHTML = "";
-
+    var rej = $("rejList"); rej.innerHTML = "";
     if (!state.entries.length){
       var d = document.createElement("div");
       d.className = "empty"; d.textContent = "Nothing recorded yet.";
       list.appendChild(d); return;
     }
-
     var anyRej = false;
-    state.entries.forEach(function(e, i){
-      if (e.status === "rejected"){ anyRej = true; return; }
-      list.appendChild(entryNode(e, i));
+    state.entries.forEach(function(e,i){
+      if (e.status === "rejected" || e.status === "review"){ anyRej = true; return; }
+      list.appendChild(entryNode(e,i));
     });
     if (anyRej){
-      var h = document.createElement("h3"); h.className = "sec";
-      h.textContent = "Rejected, not counted in spend";
+      var h = document.createElement("h3"); h.className = "grp";
+      h.textContent = "Review and rejected, not counted";
       rej.appendChild(h);
-      state.entries.forEach(function(e, i){
-        if (e.status === "rejected") rej.appendChild(entryNode(e, i));
+      state.entries.forEach(function(e,i){
+        if (e.status === "rejected" || e.status === "review") rej.appendChild(entryNode(e,i));
       });
     }
+  }
+
+  function refreshSkuList(){
+    var sel = $("skuLink"), cur = sel.value;
+    sel.innerHTML = "";
+    var o = document.createElement("option"); o.value = ""; o.textContent = "New SKU";
+    sel.appendChild(o);
+    skuIds().forEach(function(k){
+      var op = document.createElement("option");
+      op.value = k.id;
+      op.textContent = k.id + " · " + (k.piece || "untitled") + ", " + (k.maker || "unnamed");
+      sel.appendChild(op);
+    });
+    sel.value = cur;
+    if (sel.value !== cur) sel.value = "";
   }
 
   function loadForEdit(i){
@@ -764,8 +1513,24 @@
     editIndex = i;
     $("maker").value = e.maker || ""; $("piece").value = e.piece || "";
     $("region").value = e.region || "bali"; $("status").value = e.status || "purchased";
-    $("local").value = e.localIdr || ""; $("target").value = e.target || "";
+    $("category").value = e.category || ""; $("justify").value = e.justify || "";
+    $("stage").value = e.stage || "initial";
+    $("format").value = e.format || "single";
+    $("components").value = e.components || 1;
+    $("setContents").value = e.setContents || "";
+    $("priceBasis").value = e.priceBasis || "set";
+    (e.comps || []).forEach(function(r, n){
+      if (n > 2) return;
+      $("c" + (n+1) + "n").value = r.name || "";
+      $("c" + (n+1) + "q").value = r.qty || "";
+      $("c" + (n+1) + "p").value = r.price || "";
+    });
+    refreshSkuList(); $("skuLink").value = "";
+    $("negotiated").value = e.negotiated || ""; $("local").value = e.localIdr || "";
     $("hours").value = e.hours || ""; $("materials").value = e.materials || "";
+    $("ohUnit").value = e.ohUnit || ""; $("agreedRate").value = e.agreedRate || "";
+    $("confBy").value = e.confBy || ""; $("confHow").value = e.confHow || "verbal";
+    $("target").value = e.target || "";
     $("dl").value = e.dl || ""; $("dw").value = e.dw || ""; $("dh").value = e.dh || "";
     $("kg").value = e.kg || ""; $("units").value = e.units || "";
     $("attest").checked = !!e.attest;
@@ -782,55 +1547,85 @@
   }
 
   INPUT_IDS.forEach(function(id){ $(id).addEventListener("input", render); });
-  ["region","status"].forEach(function(id){ $(id).addEventListener("change", render); });
+  ["region","status","confHow","category","justify","stage","format","priceBasis"].forEach(function(id){ $(id).addEventListener("change", render); });
+  $("skuLink").addEventListener("change", function(){
+    var id = $("skuLink").value;
+    if (!id){ $("skuHint").textContent = "A sample and its production batch share one SKU. Pick the existing SKU when you come back to order."; render(); return; }
+    var src = null;
+    state.entries.forEach(function(e){ if (e.skuId === id && !src) src = e; });
+    if (src){
+      $("maker").value = src.maker || ""; $("piece").value = src.piece || "";
+      $("category").value = src.category || ""; $("region").value = src.region || "bali";
+      if (src.dl){ $("dl").value = src.dl; $("dw").value = src.dw; $("dh").value = src.dh; $("kg").value = src.kg; }
+      if (src.negotiated) $("negotiated").value = src.negotiated;
+      if (src.hours) $("hours").value = src.hours;
+      if (src.materials) $("materials").value = src.materials;
+      if (src.ohUnit) $("ohUnit").value = src.ohUnit;
+      if (src.agreedRate) $("agreedRate").value = src.agreedRate;
+      if (src.localIdr) $("local").value = src.localIdr;
+      $("attest").checked = !!src.attest;
+      if (src.confBy) $("confBy").value = src.confBy;
+      $("format").value = src.format || "single";
+      $("components").value = src.components || 1;
+      $("setContents").value = src.setContents || "";
+      $("priceBasis").value = src.priceBasis || "set";
+      (src.comps || []).forEach(function(r, n){
+        if (n > 2) return;
+        $("c" + (n+1) + "n").value = r.name || "";
+        $("c" + (n+1) + "q").value = r.qty || "";
+        $("c" + (n+1) + "p").value = r.price || "";
+      });
+      $("stage").value = src.stage === "sample" ? "initial" : "reorder";
+      $("skuHint").textContent = "Adding a batch to " + id + ". Counts as one SKU, not two.";
+    }
+    render();
+  });
+  $("phase").addEventListener("change", function(){ captureSettings(); renderLedger(); });
   $("attest").addEventListener("change", render);
   SETTING_IDS.forEach(function(id){
     $(id).addEventListener("input", function(){ captureSettings(); render(); renderLedger(); });
+    $(id).addEventListener("change", function(){ captureSettings(); render(); renderLedger(); });
   });
 
   $("save").addEventListener("click", function(){
     var p = formParams();
-    if (!(p.localIdr > 0 && p.target > 0)) return;
     if (validate().length) return;
     var c = core(p);
-    if (c.status === "incomplete" || c.status === "unverified") return;
-
+    if (c.eth !== "pass" || c.com === "incomplete") return;
     var st = $("status").value;
-    if ((c.status === "walk" || c.status === "floorfail") && st !== "rejected"){
-      var msg = c.status === "floorfail"
-        ? "Maker rate is " + rp(c.hourlyIdr) + " an hour, below the floor.\n\nRecord it anyway?"
-        : "Below the " + (c.gate*100).toFixed(0) + "% margin floor at " + (c.margin*100).toFixed(1)
-          + "%.\nNeeds " + aud0(c.minPaid) + " to clear.\n\nRecord it anyway?";
-      if (!confirm(msg)) return;
-    }
+    if (c.com === "reject" && st !== "review" && st !== "rejected") return;
 
     var prev = editIndex !== null ? state.entries[editIndex] : null;
     var rec = {
-      maker: $("maker").value.trim(), piece: $("piece").value.trim(),
-      region: $("region").value, status: st,
-      localIdr: p.localIdr, target: p.target,
-      hours: p.hours, materials: p.materials, attest: p.attest,
-      dl: p.dl, dw: p.dw, dh: p.dh, kg: p.kg,
-      units: num("units"),
-      when: (prev && prev.when) || new Date().toISOString().slice(0,10)
+      maker:$("maker").value.trim(), piece:$("piece").value.trim(),
+      category:$("category").value, justify:$("justify").value, stage:$("stage").value,
+      format:$("format").value, components:Math.max(1, num("components")),
+      setContents:$("setContents").value.trim(), priceBasis:$("priceBasis").value,
+      comps: componentRows(),
+      skuId: $("skuLink").value || (prev && prev.skuId) || nextSkuId($("category").value),
+      region:$("region").value, status:st,
+      negotiated:p.negotiated, localIdr:p.localIdr,
+      hours:p.hours, materials:p.materials, ohUnit:p.ohUnit, agreedRate:p.agreedRate,
+      attest:p.attest, confBy:$("confBy").value.trim(), confHow:$("confHow").value,
+      target:p.target, dl:p.dl, dw:p.dw, dh:p.dh, kg:p.kg, units:num("units"),
+      when:(prev && prev.when) || new Date().toISOString().slice(0,10)
     };
     if (st === "purchased"){
       rec.paidRate = (prev && prev.status === "purchased" && prev.paidRate) ? prev.paidRate : num("sRate");
-      rec.paidIdr  = (prev && prev.status === "purchased" && prev.paidIdr)  ? prev.paidIdr  : p.localIdr * num("sMult");
+      rec.paidIdr  = (prev && prev.status === "purchased" && prev.paidIdr)  ? prev.paidIdr  : c.makerIdr;
     }
-
     if (editIndex !== null){ state.entries[editIndex] = rec; exitEdit(); }
-    else { state.entries.push(rec); }
+    else state.entries.push(rec);
     save();
-    ["piece","local","target","hours","materials","dl","dw","dh","kg"].forEach(function(id){ $(id).value = ""; });
-    $("attest").checked = false;
+    CLEARABLE.forEach(function(id){ $(id).value = ""; });
+    $("attest").checked = false; $("skuLink").value = "";
+    refreshSkuList();
     render(); renderLedger(); showTab("ledger");
   });
 
   $("clear").addEventListener("click", function(){
-    ["piece","local","target","hours","materials","dl","dw","dh","kg"].forEach(function(id){ $(id).value = ""; });
-    $("attest").checked = false;
-    exitEdit(); render();
+    CLEARABLE.forEach(function(id){ $(id).value = ""; });
+    $("attest").checked = false; $("skuLink").value = ""; exitEdit(); render();
   });
 
   $("wipeBtn").addEventListener("click", function(){
@@ -841,33 +1636,37 @@
 
   $("exportBtn").addEventListener("click", function(){
     var box = $("exportBox");
-    var rows = ["Date\tStatus\tRegion\tMaker\tPiece\tLocal Rp\tPay Rp\tRate\tPay A$\tHours\tMaterials Rp\tRp per hr\tFloor\tUnits\tSpend A$\tCustomer A$\tList A$\tkg\tL\tW\tH\tCBM ea\tMargin\tVerdict"];
+    var rows = ["Date\tStatus\tRegion\tStage\tFormat\tPieces per unit\tContents\tPhysical total\tCategory\tMaker\tPiece\tBasis\tAsked Rp\tFloor Rp\tPaid Rp\tRate\tPaid A$\tHours\tMaterials Rp\tOverhead Rp\tLabour rate\tAttested\tConfirmed with\tHow\tLocal Rp\tUnits\tSpend A$\tCustomer A$\tList A$\tkg\tL\tW\tH\tCBM ea\tMargin\tContrib/cbm\tEthical\tCommercial"];
     state.entries.forEach(function(e){
       var c = core(e);
       rows.push([
-        e.when, e.status, e.region === "java" ? "Central Java" : "Bali", e.maker, e.piece,
-        Math.round(e.localIdr), Math.round(c.makerIdr), Math.round(c.rate), c.makerAud.toFixed(2),
-        e.hours || "", e.materials || "", c.measured ? Math.round(c.hourlyIdr) : "", c.floorState,
-        e.units, (c.makerAud*e.units).toFixed(2),
+        e.when, e.status, e.region === "java" ? "Central Java" : "Bali",
+        e.stage || "initial", e.format || "single", e.components || 1, e.setContents || "",
+        e.units * Math.max(1, e.components || 1),
+        CATS[e.category] || "uncategorised", e.maker, e.piece, c.basis,
+        e.negotiated || "", c.canFloor ? Math.round(c.floorIdr) : "", Math.round(c.makerIdr),
+        Math.round(c.rate), c.makerAud.toFixed(2),
+        e.hours || "", e.materials || "", c.canFloor ? Math.round(c.oh) : "", Math.round(c.effRate),
+        e.attest ? "yes" : "", e.confBy || "", e.confHow || "",
+        e.localIdr || "", e.units, (c.makerAud*e.units).toFixed(2),
         Math.round(c.paid), Math.round(c.list),
         e.kg || "", e.dl || "", e.dw || "", e.dh || "", c.cbm.toFixed(4),
-        (c.margin*100).toFixed(1) + "%",
-        c.margin < c.gate ? "BELOW FLOOR" : (c.margin < c.safe ? "borderline" : "ok")
+        (c.margin*100).toFixed(1) + "%", Math.round(c.contribPerCbm), c.eth, c.com
       ].join("\t"));
     });
     rows.push("");
     rows.push("SETTINGS AT EXPORT\t" + new Date().toISOString().slice(0,16).replace("T"," "));
     SETTING_IDS.forEach(function(id){
-      var lbl = document.querySelector('label[for="' + id + '"]');
-      rows.push((lbl ? lbl.textContent : id) + "\t" + $(id).value);
+      var l = document.querySelector('label[for="' + id + '"]');
+      rows.push((l ? l.textContent : id) + "\t" + $(id).value);
     });
     $("exportText").value = rows.join("\n");
     box.classList.toggle("hidden");
     if (!box.classList.contains("hidden")) $("exportText").select();
   });
 
-  function showTab(which){
-    var isNew = which === "new";
+  function showTab(w){
+    var isNew = w === "new";
     $("paneNew").classList.toggle("hidden", !isNew);
     $("paneLedger").classList.toggle("hidden", isNew);
     $("tabNew").classList.toggle("on", isNew);
@@ -878,7 +1677,12 @@
   $("tabNew").addEventListener("click", function(){ showTab("new"); });
   $("tabLedger").addEventListener("click", function(){ showTab("ledger"); });
 
-  load(); applySettings(); render(); renderLedger();
+  load(); applySettings(); refreshSkuList(); render(); renderLedger();
+  if (migrated){
+    var b = $("editBanner");
+    b.classList.remove("hidden");
+    b.textContent = migrated + (migrated === 1 ? " piece" : " pieces") + " brought across from the previous version. Set a category and stage on each one.";
+  }
 })();
 </script>
 </body>
